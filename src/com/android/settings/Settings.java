@@ -248,4 +248,7 @@ public class Settings extends SettingsActivity {
     public static class HardwareKeys extends SettingsActivity { /* empty */ }
     public static class GestureSettings extends SettingsActivity { /* empty */ }
 
+    // LiveDisplay
+    public static class LiveDisplaySettingsActivity extends SettingsActivity { /* empty */ }
+
 }

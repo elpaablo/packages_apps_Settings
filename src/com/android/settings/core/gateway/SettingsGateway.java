@@ -164,6 +164,7 @@ import com.android.settings.wifi.tether.WifiTetherSettings;
 import com.android.settings.arrow.GlobalActionsSettings;
 import com.android.settings.arrow.HardwareKeys;
 import com.android.settings.gestures.GestureSettings;
+import com.android.settings.livedisplay.LiveDisplaySettings;
 
 public class SettingsGateway {
 
@@ -317,6 +318,7 @@ public class SettingsGateway {
             GlobalActionsSettings.class.getName(),
             HardwareKeys.class.getName(),
             GestureSettings.class.getName()
+            LiveDisplaySettings.class.getName()
     };
 
     public static final String[] SETTINGS_FOR_RESTRICTED = {

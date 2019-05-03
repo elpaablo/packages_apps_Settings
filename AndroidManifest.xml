@@ -109,6 +109,10 @@
     <uses-permission android:name="android.permission.BIND_CELL_BROADCAST_SERVICE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     
+    <!-- LiveDisplay -->
+    <uses-permission android:name="lineageos.permission.HARDWARE_ABSTRACTION_ACCESS" />
+    <uses-permission android:name="lineageos.permission.MANAGE_LIVEDISPLAY" />
+
     <application android:label="@string/settings_label"
             android:icon="@drawable/ic_launcher_settings"
             android:theme="@style/Theme.Settings"
@@ -3298,7 +3302,7 @@
                 </intent-filter>
         </activity-alias>
 
-        <provider android:name=".slices.SettingsSliceProvider"
+       <provider android:name=".slices.SettingsSliceProvider"
                   android:authorities="com.android.settings.slices;android.settings.slices"
                   android:exported="true"
                   android:grantUriPermissions="true" />
@@ -3476,6 +3480,19 @@
         </activity>
 
         <!-- This is the longest AndroidManifest.xml ever. -->
+        
+        <activity
+            android:name="Settings$LiveDisplaySettingsActivity"
+            android:label="@*android:string/live_display_title"
+            android:parentActivityName="Settings"
+            android:configChanges="orientation|keyboardHidden|screenSize">
+            <intent-filter android:priority="1">
+                <action android:name="com.android.settings.LIVEDISPLAY_SETTINGS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
+                android:value="com.android.settings.livedisplay.LiveDisplaySettings" />
+        </activity>
 
         <!-- AospExtended additions -->
         <activity android:name=".Settings$ExtensionsSettingsActivity"
@@ -3507,6 +3524,87 @@
             <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
                 android:value="org.aospextended.extensions.fragments.GamingMode" />
         </activity>
+        <activity android:name="org.aospextended.extensions.SystemappRemover"
+            android:label="@string/system_app_remover_title"
+            android:taskAffinity="com.android.settings"
+            android:parentActivityName="com.android.settings.Settings">
+            <intent-filter>
+                <action android:name="org.aospextended.extensions.ViewSystemAppRemover" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- Navbar -->
+        <activity android:name="org.aospextended.extensions.fragments.navbar.BackLongPress"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.MinWidth"
+            android:label="@string/app_picker_dialog_title"
+            android:taskAffinity="com.android.settings"
+            android:parentActivityName="com.android.settings.Settings">
+            <intent-filter>
+                <action android:name="org.aospextended.extensions.fragments.navbar.BackLongPress" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="org.aospextended.extensions.fragments.navbar.BackDoubleTap"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.MinWidth"
+            android:label="@string/app_picker_dialog_title"
+            android:taskAffinity="com.android.settings"
+            android:parentActivityName="com.android.settings.Settings">
+            <intent-filter>
+                <action android:name="org.aospextended.extensions.fragments.navbar.BackDoubleTap" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="org.aospextended.extensions.fragments.navbar.HomeLongPress"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.MinWidth"
+            android:label="@string/app_picker_dialog_title"
+            android:taskAffinity="com.android.settings"
+            android:parentActivityName="com.android.settings.Settings">
+            <intent-filter>
+                <action android:name="org.aospextended.extensions.fragments.navbar.HomeLongPress" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="org.aospextended.extensions.fragments.navbar.HomeDoubleTap"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.MinWidth"
+            android:label="@string/app_picker_dialog_title"
+            android:taskAffinity="com.android.settings"
+            android:parentActivityName="com.android.settings.Settings">
+            <intent-filter>
+                <action android:name="org.aospextended.extensions.fragments.navbar.HomeDoubleTap" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="org.aospextended.extensions.fragments.navbar.AppSwitchLongPress"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.MinWidth"
+            android:label="@string/app_picker_dialog_title"
+            android:taskAffinity="com.android.settings"
+            android:parentActivityName="com.android.settings.Settings">
+            <intent-filter>
+                <action android:name="org.aospextended.extensions.fragments.navbar.AppSwitchLongPress" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="org.aospextended.extensions.fragments.navbar.AppSwitchDoubleTap"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.MinWidth"
+            android:label="@string/app_picker_dialog_title"
+            android:taskAffinity="com.android.settings"
+            android:parentActivityName="com.android.settings.Settings">
+            <intent-filter>
+                <action android:name="org.aospextended.extensions.fragments.navbar.AppSwitchDoubleTap" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
     </application>
 </manifest>
-

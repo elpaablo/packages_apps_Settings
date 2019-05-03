@@ -164,6 +164,8 @@ import com.android.settings.arrow.GlobalActionsSettings;
 import com.android.settings.arrow.HardwareKeys;
 import com.android.settings.gestures.GestureSettings;
 
+import com.android.settings.livedisplay.LiveDisplaySettings;
+
 public class SettingsGateway {
 
     /**
@@ -314,7 +316,8 @@ public class SettingsGateway {
             MediaControlsSettings.class.getName(),
             GlobalActionsSettings.class.getName(),
             HardwareKeys.class.getName(),
-            GestureSettings.class.getName()
+            GestureSettings.class.getName(),
+            LiveDisplaySettings.class.getName()
     };
 
     public static final String[] SETTINGS_FOR_RESTRICTED = {

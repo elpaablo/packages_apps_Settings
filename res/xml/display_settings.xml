@@ -83,6 +83,15 @@
         settings:keywords="@string/keywords_auto_rotate"
         settings:controller="com.android.settings.display.AutoRotatePreferenceController" />
 
+    <Preference
+        android:key="livedisplay"
+        android:title="@*android:string/live_display_title"
+        android:summary="@string/live_display_summary"
+        android:layout="@layout/dot_preference_middle_card"
+        settings:controller="com.android.settings.livedisplay.LiveDisplayPreferenceController">
+        <intent android:action="com.android.settings.LIVEDISPLAY_SETTINGS" />
+    </Preference>
+
     <com.android.settings.display.DcDimmingPreference
         android:key="dc_dimming"
         android:title="@string/dc_dimming_title"

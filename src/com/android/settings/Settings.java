@@ -247,4 +247,7 @@ public class Settings extends SettingsActivity {
      */
     public static class FluidCustomisationActivity extends SettingsActivity {}
 
+    // LiveDisplay
+    public static class LiveDisplaySettingsActivity extends SettingsActivity { /* empty */ }
+
 }

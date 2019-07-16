@@ -35,6 +35,7 @@ import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.widget.TextView;
 import androidx.preference.Preference;
+import androidx.preference.PreferenceCategory;
 
 import androidx.annotation.VisibleForTesting;
 import androidx.loader.app.LoaderManager;
@@ -74,6 +75,8 @@ public class PowerUsageSummary extends PowerUsageBase implements OnLongClickList
 
     private static final String KEY_SCREEN_USAGE = "screen_usage";
     private static final String KEY_TIME_SINCE_LAST_FULL_CHARGE = "last_full_charge";
+
+    private PreferenceCategory mSmartChargingCat;
 
     @VisibleForTesting
     static final int BATTERY_INFO_LOADER = 1;
@@ -224,6 +227,12 @@ public class PowerUsageSummary extends PowerUsageBase implements OnLongClickList
         }
         mBatteryTipPreferenceController.restoreInstanceState(icicle);
         updateBatteryTipFlag(icicle);
+
+        // Check availability of Smart Charging
+        mSmartChargingCat = (PreferenceCategory) findPreference(KEY_SMART_CHARGING_CATEGORY);
+        if (!getResources().getBoolean(R.bool.config_supportSmartCharging)) {
+            getPreferenceScreen().removePreference(mSmartChargingCat);
+        }
     }
 
     @Override

@@ -3500,6 +3500,17 @@
                 <action android:name="com.android.settings.action.LAUNCH_BLUETOOTH_PAIRING"/>
             </intent-filter>/>
         </receiver>
+        <activity android:name=".backup.transport.TransportActivity"
+                  android:label="@string/backup_transport_title"
+                  android:icon="@drawable/ic_settings_backup"
+                  android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="settings"
+                      android:host="com.android.settings.backup.transport" />
+            </intent-filter>
+        </activity>
 
         <!-- This is the longest AndroidManifest.xml ever. -->
 
@@ -3535,4 +3546,3 @@
         </activity>
     </application>
 </manifest>
-

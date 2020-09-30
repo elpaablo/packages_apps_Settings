@@ -91,5 +91,13 @@
     <string name="hidden_label">Hidden</string>
     <string name="short_label">Short</string>
     <string name="long_label">Long</string>
+    
+    <!-- Navbar AppPicker -->
+    <string name="app_picker_dialog_title">Select app</string>
+    <string name="activity_picker_dialog_title">Select activity</string>
+    
+    <!-- Backup Transport selection settings menu and activity title -->
+    <string name="backup_transport_setting_label">Change backup provider</string>
+    <string name="backup_transport_title">Select backup provider</string>
 
 </resources>

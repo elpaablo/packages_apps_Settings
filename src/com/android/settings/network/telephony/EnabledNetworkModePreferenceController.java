@@ -67,20 +67,24 @@ public class EnabledNetworkModePreferenceController extends
     @Override
     public int getAvailabilityStatus(int subId) {
         boolean visible;
-        final PersistableBundle carrierConfig = mCarrierConfigManager.getConfigForSubId(subId);
-        if (subId == SubscriptionManager.INVALID_SUBSCRIPTION_ID) {
-            visible = false;
-        } else if (carrierConfig == null) {
-            visible = false;
-        } else if (carrierConfig.getBoolean(
-                CarrierConfigManager.KEY_HIDE_CARRIER_NETWORK_SETTINGS_BOOL)
-                || carrierConfig.getBoolean(
-                CarrierConfigManager.KEY_HIDE_PREFERRED_NETWORK_TYPE_BOOL)) {
-            visible = false;
-        } else if (carrierConfig.getBoolean(CarrierConfigManager.KEY_WORLD_PHONE_BOOL)) {
-            visible = false;
+        if (mCarrierConfigManager != null) {
+            final PersistableBundle carrierConfig = mCarrierConfigManager.getConfigForSubId(subId);
+            if (subId == SubscriptionManager.INVALID_SUBSCRIPTION_ID) {
+                visible = false;
+            } else if (carrierConfig == null) {
+                visible = false;
+            } else if (carrierConfig.getBoolean(
+                    CarrierConfigManager.KEY_HIDE_CARRIER_NETWORK_SETTINGS_BOOL)
+                    || carrierConfig.getBoolean(
+                    CarrierConfigManager.KEY_HIDE_PREFERRED_NETWORK_TYPE_BOOL)) {
+                visible = false;
+            } else if (carrierConfig.getBoolean(CarrierConfigManager.KEY_WORLD_PHONE_BOOL)) {
+                visible = false;
+            } else {
+                visible = true;
+            }
         } else {
-            visible = true;
+            visible = false;
         }
 
         return visible ? AVAILABLE : CONDITIONALLY_UNAVAILABLE;

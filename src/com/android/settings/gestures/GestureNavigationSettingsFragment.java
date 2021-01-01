@@ -16,27 +16,27 @@
 
 package com.android.settings.gestures;
 
-import static android.view.WindowManagerPolicyConstants.NAV_BAR_MODE_GESTURAL_OVERLAY;
 import static android.os.UserHandle.USER_CURRENT;
+import static android.view.WindowManagerPolicyConstants.NAV_BAR_MODE_GESTURAL_OVERLAY;
 
 import android.app.settings.SettingsEnums;
 import android.content.Context;
-import android.content.om.IOverlayManager;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Point;
+import android.content.om.IOverlayManager;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.provider.Settings;
 import android.view.WindowManager;
 
-import com.android.settings.R;
 import com.android.settings.dashboard.DashboardFragment;
+import com.android.settings.R;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settings.widget.LabeledSeekBarPreference;
 import com.android.settingslib.search.SearchIndexable;
-
+	
 /**
  * A fragment to include all the settings related to Gesture Navigation mode.
  */
@@ -53,6 +53,7 @@ public class GestureNavigationSettingsFragment extends DashboardFragment {
 
     private static final String LEFT_HEIGHT_SEEKBAR_KEY = Settings.Secure.BACK_GESTURE_HEIGHT_LEFT;
     private static final String RIGHT_HEIGHT_SEEKBAR_KEY = Settings.Secure.BACK_GESTURE_HEIGHT_RIGHT;
+    
     private static final String GESTURE_BAR_LENGTH_KEY = Settings.Secure.GESTURE_NAVBAR_LENGTH;
 
     private static final String LONG_OVERLAY_PKG = "com.custom.overlay.systemui.gestural.long";
@@ -60,6 +61,8 @@ public class GestureNavigationSettingsFragment extends DashboardFragment {
     private static final String HIDDEN_OVERLAY_PKG = "com.custom.overlay.systemui.gestural.hidden";
 
     private IOverlayManager mOverlayService;
+
+
 
     private WindowManager mWindowManager;
     private BackGestureIndicatorView mIndicatorView;
@@ -105,6 +108,7 @@ public class GestureNavigationSettingsFragment extends DashboardFragment {
 
         initSeekBarPreference(LEFT_HEIGHT_SEEKBAR_KEY);
         initSeekBarPreference(RIGHT_HEIGHT_SEEKBAR_KEY);
+        
         initSeekBarPreference(GESTURE_BAR_LENGTH_KEY);
     }
 
@@ -159,19 +163,17 @@ public class GestureNavigationSettingsFragment extends DashboardFragment {
 
         // Find the closest value to initScale
         float minDistance = Float.MAX_VALUE;
-                int minDistanceIndex = key == GESTURE_BAR_LENGTH_KEY ? (int) initScale : -1;
-        if (key != GESTURE_BAR_LENGTH_KEY) {
-            for (int i = 0; i < mBackGestureInsetScales.length; i++) {
-                float d = Math.abs(mBackGestureInsetScales[i] - initScale);
+        int minDistanceIndex = key == GESTURE_BAR_LENGTH_KEY ? (int) initScale : -1;
+                
+   	if (key != GESTURE_BAR_LENGTH_KEY) {
+            for (int i = 0; i < valueArray.length; i++) {
+                float d = Math.abs(valueArray[i] - initScale);
                 if (d < minDistance) {
                     minDistance = d;
                     minDistanceIndex = i;
                 }
             }
-        }
-        pref.setProgress(minDistanceIndex);
-
-        if (key != GESTURE_BAR_LENGTH_KEY) {        
+                        
             pref.setOnPreferenceChangeListener((p, v) -> {
                 float width = 0.0f;
                 float height = 0.0f;
@@ -185,37 +187,37 @@ public class GestureNavigationSettingsFragment extends DashboardFragment {
                                     RIGHT_HEIGHT_SEEKBAR_KEY, 1.0f);
                 } else if (p.getKey().equals(LEFT_HEIGHT_SEEKBAR_KEY)) {
                     width = (mDefaultBackGestureInset * mBackGestureInsetScales[(int) Settings.Secure.getFloat(getContext().getContentResolver(),
-                                    LEFT_EDGE_SEEKBAR_KEY, 1.0f)]);
+                                LEFT_EDGE_SEEKBAR_KEY, 1.0f)]);
                     height = mDisplaySize.y / (mBackGestureHeights[(int) v]);
                 } else if (p.getKey().equals(RIGHT_HEIGHT_SEEKBAR_KEY)) {
                     width = (mDefaultBackGestureInset * mBackGestureInsetScales[(int) Settings.Secure.getFloat(getContext().getContentResolver(),
-                                    RIGHT_EDGE_SEEKBAR_KEY, 1.0f)]);
+                                RIGHT_EDGE_SEEKBAR_KEY, 1.0f)]);
                     height = mDisplaySize.y / (mBackGestureHeights[(int) v]);
                 }
                 mIndicatorView.setIndicatorValues((int) width, (int) height, (p.getKey().equals(LEFT_EDGE_SEEKBAR_KEY) || p.getKey().equals(LEFT_HEIGHT_SEEKBAR_KEY)));
                 return true;
-            });
-        
-            pref.setOnPreferenceChangeStopListener((p, v) -> {
-                if (p.getKey().equals(LEFT_EDGE_SEEKBAR_KEY) || p.getKey().equals(RIGHT_EDGE_SEEKBAR_KEY)) {
+             });
+
+             pref.setOnPreferenceChangeStopListener((p, v) -> {
+                 if (p.getKey().equals(LEFT_EDGE_SEEKBAR_KEY) || p.getKey().equals(RIGHT_EDGE_SEEKBAR_KEY)) {
                      valueArray = mBackGestureInsetScales;
-                } else {
-                    valueArray = mBackGestureHeights;
-                }
-                mIndicatorView.setIndicatorValues(0, 0, (p.getKey().equals(LEFT_EDGE_SEEKBAR_KEY) || p.getKey().equals(LEFT_HEIGHT_SEEKBAR_KEY)));
-                final float scale = valueArray[(int) v];
-                Settings.Secure.putFloat(getContext().getContentResolver(), p.getKey(), scale);
-                return true;
-            });
-        } else {
-            pref.setOnPreferenceChangeListener((p, v) -> {
+                 } else {
+                     valueArray = mBackGestureHeights;
+                 }
+                 mIndicatorView.setIndicatorValues(0, 0, (p.getKey().equals(LEFT_EDGE_SEEKBAR_KEY) || p.getKey().equals(LEFT_HEIGHT_SEEKBAR_KEY)));
+                 final float scale = valueArray[(int) v];
+                 Settings.Secure.putFloat(getContext().getContentResolver(), p.getKey(), scale);
+                 return true;
+             });
+         } else {
+             pref.setOnPreferenceChangeListener((p, v) -> {
                 switch((int) v) {
                     case 0:
                         try {
                             mOverlayService.setEnabledExclusiveInCategory(HIDDEN_OVERLAY_PKG, USER_CURRENT);
                             mOverlayService.setEnabled(LONG_OVERLAY_PKG, false, USER_CURRENT);
                             mOverlayService.setEnabled(MEDIUM_OVERLAY_PKG, false, USER_CURRENT);
-                        } catch (RemoteException re) {
+                       } catch (RemoteException re) {
                             throw re.rethrowFromSystemServer();
                         }
                         break;
@@ -249,6 +251,7 @@ public class GestureNavigationSettingsFragment extends DashboardFragment {
                 return true;
             });
         }
+        pref.setProgress(minDistanceIndex);
     }
 
     private static float[] getFloatArray(TypedArray array) {
@@ -271,3 +274,4 @@ public class GestureNavigationSettingsFragment extends DashboardFragment {
             };
 
 }
+

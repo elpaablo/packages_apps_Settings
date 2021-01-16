@@ -3534,9 +3534,9 @@
             </intent-filter>
         </activity>
 
-        <!-- Navbar -->
+                <!-- Navbar -->
         <activity android:name="org.aospextended.extensions.fragments.navbar.BackLongPress"
-            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.MinWidth"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog.MinWidth"
             android:label="@string/app_picker_dialog_title"
             android:taskAffinity="com.android.settings"
             android:parentActivityName="com.android.settings.Settings">
@@ -3548,7 +3548,7 @@
 
         <activity
             android:name="org.aospextended.extensions.fragments.navbar.BackDoubleTap"
-            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.MinWidth"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog.MinWidth"
             android:label="@string/app_picker_dialog_title"
             android:taskAffinity="com.android.settings"
             android:parentActivityName="com.android.settings.Settings">
@@ -3560,7 +3560,7 @@
 
         <activity
             android:name="org.aospextended.extensions.fragments.navbar.HomeLongPress"
-            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.MinWidth"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog.MinWidth"
             android:label="@string/app_picker_dialog_title"
             android:taskAffinity="com.android.settings"
             android:parentActivityName="com.android.settings.Settings">
@@ -3572,7 +3572,7 @@
 
         <activity
             android:name="org.aospextended.extensions.fragments.navbar.HomeDoubleTap"
-            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.MinWidth"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog.MinWidth"
             android:label="@string/app_picker_dialog_title"
             android:taskAffinity="com.android.settings"
             android:parentActivityName="com.android.settings.Settings">
@@ -3584,7 +3584,7 @@
 
         <activity
             android:name="org.aospextended.extensions.fragments.navbar.AppSwitchLongPress"
-            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.MinWidth"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog.MinWidth"
             android:label="@string/app_picker_dialog_title"
             android:taskAffinity="com.android.settings"
             android:parentActivityName="com.android.settings.Settings">
@@ -3596,7 +3596,7 @@
 
         <activity
             android:name="org.aospextended.extensions.fragments.navbar.AppSwitchDoubleTap"
-            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.MinWidth"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog.MinWidth"
             android:label="@string/app_picker_dialog_title"
             android:taskAffinity="com.android.settings"
             android:parentActivityName="com.android.settings.Settings">
@@ -3604,6 +3604,17 @@
                 <action android:name="org.aospextended.extensions.fragments.navbar.AppSwitchDoubleTap" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+        </activity>
+        
+        <activity android:name="Settings$OmniJawsSettingsActivity"
+                  android:label="@string/weather_title"
+                  android:taskAffinity="com.android.settings" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
+                android:value="org.aospextended.extensions.OmniJawsSettings" />
         </activity>
 
     </application>

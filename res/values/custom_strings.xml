@@ -86,8 +86,16 @@
     <string name="adj_intensity_title">Intensity</string>
     <string name="adj_contrast_title">Contrast</string>
 
-   <!-- Backup Transport selection settings menu and activity title -->
+    <!-- Backup Transport selection settings menu and activity title -->
     <string name="backup_transport_setting_label">Change backup provider</string>
     <string name="backup_transport_title">Select backup provider</string>
+    
+    <!-- Notification headers -->
+    <string name="notification_headers_title">Notification Headers</string>
+    <string name="notification_headers_summary">Show headers in the notification shade\nRequires a SystemUI restart</string>
+    
+    <!-- Force expand notifications -->
+    <string name="force_expanded_notifications_title">Force expand notifications</string>
+    <string name="force_expanded_notifications_summary">Always keep notifications expanded. Warning! This feature has known to cause some performance regression in notification panel. Use at your own risk</string>
 
 </resources>

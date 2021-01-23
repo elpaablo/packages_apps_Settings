@@ -34,6 +34,18 @@
         settings:allowDividerAbove="true"
         settings:allowDividerBelow="false"
         android:fragment="com.android.settings.arrow.HeadsUpSettings" />
+        
+    <com.arrow.support.preferences.SystemSettingSwitchPreference
+        android:key="notification_headers"
+        android:title="@string/notification_headers_title"
+        android:summary="@string/notification_headers_summary"
+        android:defaultValue="true" />
+        
+    <com.arrow.support.preferences.SystemSettingSwitchPreference	
+           android:key="force_expanded_notifications"
+           android:title="@string/force_expanded_notifications_title"
+           android:summary="@string/force_expanded_notifications_summary"	
+           android:defaultValue="false" />
 
     <Preference
         android:key="notification_history"

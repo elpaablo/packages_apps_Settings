@@ -90,7 +90,7 @@ public class SmartChargingSettings extends DashboardFragment implements OnPrefer
 
     @Override
     public int getMetricsCategory() {
-        return MetricsProto.MetricsEvent.FUELGAGE_SMART_CHARGING;
+        return MetricsProto.MetricsEvent.ARROW;
     }
 
     @Override

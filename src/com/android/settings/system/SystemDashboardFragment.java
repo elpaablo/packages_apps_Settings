@@ -15,15 +15,21 @@
  */
 package com.android.settings.system;
 
+import android.content.ContentResolver;
+import android.content.Context;
 import android.app.settings.SettingsEnums;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.UserHandle;
 import android.provider.SearchIndexableResource;
+import android.provider.Settings;
+import android.provider.Settings.Secure;
 
 import androidx.annotation.VisibleForTesting;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceScreen;
+import androidx.preference.SwitchPreference;
 
 import com.android.settings.R;
 import com.android.settings.dashboard.DashboardFragment;
@@ -32,17 +38,23 @@ import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settingslib.search.Indexable;
 import com.android.settingslib.search.SearchIndexable;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @SearchIndexable
-public class SystemDashboardFragment extends DashboardFragment {
+public class SystemDashboardFragment extends DashboardFragment implements
+        Preference.OnPreferenceChangeListener{
 
     private static final String TAG = "SystemDashboardFrag";
 
     private static final String KEY_RESET = "reset_dashboard";
 
     public static final String EXTRA_SHOW_AWARE_DISABLED = "show_aware_dialog_disabled";
+    
+    public static final String KERNEL_PROFILES_ENABLED_KEY = "kernel_profiles_enabled";
+    
+    private SwitchPreference mKernelProfilesPreference;
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -53,6 +65,10 @@ public class SystemDashboardFragment extends DashboardFragment {
         if (getVisiblePreferenceCount(screen) == screen.getInitialExpandedChildrenCount() + 1) {
             screen.setInitialExpandedChildrenCount(Integer.MAX_VALUE);
         }
+        
+        mKernelProfilesPreference = (SwitchPreference) findPreference(KERNEL_PROFILES_ENABLED_KEY);
+        mKernelProfilesPreference.setChecked(Settings.Secure.getIntForUser(getContentResolver(),
+                    Settings.Secure.KERNEL_PROFILES_ENABLED, 1, UserHandle.USER_CURRENT) == 1);
 
         showRestrictionDialog();
     }
@@ -98,6 +114,18 @@ public class SystemDashboardFragment extends DashboardFragment {
         }
         return visibleCount;
     }
+    
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object objValue) {
+        if (preference == mKernelProfilesPreference) {
+            boolean value = (Boolean) objValue;
+            mKernelProfilesPreference.setChecked(value);
+            Settings.Secure.putInt(getContentResolver(),
+                Settings.Secure.KERNEL_PROFILES_ENABLED, value ? 1 : 0);
+            return true;
+       }
+       return false;
+    }
 
     /**
      * For Search.
@@ -110,6 +138,13 @@ public class SystemDashboardFragment extends DashboardFragment {
                     final SearchIndexableResource sir = new SearchIndexableResource(context);
                     sir.xmlResId = R.xml.system_dashboard_fragment;
                     return Arrays.asList(sir);
+                }
+                
+                @Override
+                public List<String> getNonIndexableKeys(Context context) {
+                    final List<String> result = new ArrayList<String>();
+                    result.add(KERNEL_PROFILES_ENABLED_KEY);
+                    return result;
                 }
             };
 }

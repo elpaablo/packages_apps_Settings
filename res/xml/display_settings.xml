@@ -53,13 +53,13 @@
         android:summary="@string/summary_placeholder"
         android:fragment="com.android.settings.display.AutoBrightnessSettings"
         settings:controller="com.android.settings.display.AutoBrightnessPreferenceController"/>
-
-    <Preference
-        android:key="livedisplay"
-        android:title="@*android:string/live_display_title"
-        android:summary="@string/live_display_summary">
-        <intent android:action="com.android.settings.LIVEDISPLAY_SETTINGS" />
-    </Preference>
+        
+    <com.arrow.support.preferences.SystemSettingSwitchPreference
+        android:key="display_cutout_hidden"
+        android:title="@string/hide_notch_title"
+        android:summary="@string/hide_notch_summary"
+        android:disableDependentsState="true"
+        android:defaultValue="false" />
 
     <com.android.settingslib.RestrictedPreference
         android:key="wallpaper"
@@ -91,6 +91,13 @@
         settings:keywords="@string/keywords_auto_rotate"
         settings:controller="com.android.settings.display.AutoRotatePreferenceController" />
 
+    <Preference
+        android:key="livedisplay"
+        android:title="@*android:string/live_display_title"
+        android:summary="@string/live_display_summary">
+        <intent android:action="com.android.settings.LIVEDISPLAY_SETTINGS" />
+    </Preference>
+    
     <Preference
         android:key="color_mode"
         android:title="@string/color_mode_title"

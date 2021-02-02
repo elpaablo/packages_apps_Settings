@@ -20,6 +20,7 @@ import android.content.Context;
 import android.app.settings.SettingsEnums;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.UserHandle;
 import android.provider.SearchIndexableResource;
 import android.provider.Settings;
@@ -31,13 +32,17 @@ import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceScreen;
 import androidx.preference.SwitchPreference;
 
+import com.android.internal.custom.KernelProfileManager;
+
 import com.android.settings.R;
 import com.android.settings.dashboard.DashboardFragment;
 import com.android.settings.overlay.FeatureFactory;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settingslib.search.Indexable;
 import com.android.settingslib.search.SearchIndexable;
+import com.android.settings.utils.Util;
 
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -54,7 +59,14 @@ public class SystemDashboardFragment extends DashboardFragment implements
     
     public static final String KERNEL_PROFILES_ENABLED_KEY = "kernel_profiles_enabled";
     
+    public static final String KERNEL_PROFILE = "kernel_profile";
+    
+    private static final String PREF_SYSTEM_APP_REMOVER = "system_app_remover";
+    private static final String PREF_ADBLOCK = "persist.aicp.hosts_block";
+    
     private SwitchPreference mKernelProfilesPreference;
+    private KernelProfileManager manager;
+    private Handler mHandler = new Handler();
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -68,8 +80,14 @@ public class SystemDashboardFragment extends DashboardFragment implements
         
         mKernelProfilesPreference = (SwitchPreference) findPreference(KERNEL_PROFILES_ENABLED_KEY);
         mKernelProfilesPreference.setChecked(Settings.Secure.getIntForUser(getContentResolver(),
-                    Settings.Secure.KERNEL_PROFILES_ENABLED, 1, UserHandle.USER_CURRENT) == 1);
+                    Settings.Secure.KERNEL_PROFILES_ENABLED, 0, UserHandle.USER_CURRENT) == 1);
+        mKernelProfilesPreference.setOnPreferenceChangeListener(this);
+        
+        Preference systemAppRemover = findPreference(PREF_SYSTEM_APP_REMOVER);
+        Util.requireRoot(getActivity(), systemAppRemover);
 
+        findPreference(PREF_ADBLOCK).setOnPreferenceChangeListener(this);
+        
         showRestrictionDialog();
     }
 
@@ -122,9 +140,29 @@ public class SystemDashboardFragment extends DashboardFragment implements
             mKernelProfilesPreference.setChecked(value);
             Settings.Secure.putInt(getContentResolver(),
                 Settings.Secure.KERNEL_PROFILES_ENABLED, value ? 1 : 0);
+            
+            //if enabling kernel profiles, apply saved profile
+            if (value){ 
+                manager = new KernelProfileManager(getContext());
+                int profile = Settings.Secure.getIntForUser(getContentResolver(),
+                        Settings.Secure.KERNEL_PROFILE, KernelProfileManager.PROFILE_DEFAULT,
+                        UserHandle.USER_CURRENT);
+                manager.setProfile(profile);
+            }
             return true;
-       }
-       return false;
+        } else if (PREF_ADBLOCK.equals(preference.getKey())) {
+            // Flush the java VM DNS cache to re-read the hosts file.
+            // Delay to ensure the value is persisted before we refresh
+            mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        InetAddress.clearDnsCache();
+                    }
+            }, 1000);
+            return true;
+        }
+       
+        return false;
     }
 
     /**

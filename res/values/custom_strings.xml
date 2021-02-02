@@ -102,5 +102,31 @@
     <string name="system_custom_title">Custom</string>
     <string name="system_custom_kernel_profiles_title">Kernel profiles</string>
     <string name="system_custom_kernel_profiles_summary">Use kernel profiles</string>
+    
+      <!-- Status bar brightness control -->
+    <string name="status_bar_brightness_control_title">Brightness control</string>
+    <string name="status_bar_brightness_control_summary">Adjust brightness by sliding across the status bar</string>
+    
+    <!-- Hide notch -->
+    <string name="hide_notch_title">Hide notch</string>
+    <string name="hide_notch_summary">Apps can not use the notch area</string>
+    
+      <!-- AICP System app remover -->
+    <string name="system_app_remover_title">Uninstaller</string>
+    <string name="system_app_remover_summary">Remove pre-installed apps</string>
+    <string name="system_app_remover_message_delete">Are you sure you want to delete this app?</string>
+    <string name="system_app_remover_message_noselect">Nothing selected</string>
+    <string name="reboot_dialog_ok">Reboot</string>
+    <string name="reboot_dialog_cancel">Cancel</string>
+    <string name="soft_reboot_title">Rebooting</string>
+    <string name="soft_reboot_message">Soft reboot is in progress, please be patient</string>
+    <string name="systemui_restart_title">SystemUI restart required</string>
+    <string name="systemui_restart_message">For all changes to take effect, a SystemUI restart is required. Restart SystemUI now?</string>
+    <string name="cannot_get_su">Action failed because of missing superuser access</string>
+    
+    <!-- AICP ad-blocker -->
+    <string name="hosts_block_title">Ad-block</string>
+    <string name="hosts_block_summary">Block ads with a modified hosts file. Turn off to use third party solutions or if apps cause issues.</string>
+    
 
 </resources>

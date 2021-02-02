@@ -81,7 +81,21 @@
         <SwitchPreference
              settings:key="kernel_profiles_enabled"
              settings:title="@string/system_custom_kernel_profiles_title"
-             settings:summary="@string/system_custom_kernel_profiles_summary" />
+             settings:summary="@string/system_custom_kernel_profiles_summary"
+             settings:icon="@drawable/ic_kernel_profiles" />
+             
+        <Preference
+            android:key="system_app_remover"
+            android:title="@string/system_app_remover_title"
+            android:summary="@string/system_app_remover_summary">
+            <intent android:action="com.android.settings.ViewSystemAppRemover" />
+        </Preference>
+
+        <com.arrow.support.preferences.SystemPropSwitchPreference
+            android:key="persist.aicp.hosts_block"
+            android:title="@string/hosts_block_title"
+            android:summary="@string/hosts_block_summary"
+           android:defaultValue="false" /> 
         
     </PreferenceCategory>
 

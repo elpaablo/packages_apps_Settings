@@ -99,7 +99,7 @@
     <!-- Backup Transport selection settings menu and activity title -->
     <string name="backup_transport_setting_label">Change backup provider</string>
     <string name="backup_transport_title">Select backup provider</string>
-    
+
     <!-- Notification sound timeout -->
     <string name="app_notification_sound_timeout_title">Minimum time between notification sounds</string>
     <string name="app_notification_sound_timeout_summary_template">Allow sounds or vibration no more than once every <xliff:g id="duration">%1$s</xliff:g></string>
@@ -110,8 +110,16 @@
     <string name="app_notification_sound_timeout_value_5_minutes">5 minutes</string>
     <string name="app_notification_sound_timeout_value_15_minutes">10 minutes</string>
     <string name="app_notification_sound_timeout_value_30_minutes">30 minutes</string>
-    
+
     <!-- OmniJaws -->
     <string name="weather_title">Weather settings</string>
+    <!-- Kernel profiles -->
+    <string name="system_custom_title">Custom</string>
+    <string name="system_custom_kernel_profiles_title">Kernel profiles</string>
+    <string name="system_custom_kernel_profiles_summary">Use kernel profiles</string>
+    
+    <!-- hide notch -->
+    <string name="hide_notch_title">Hide notch</string>
+    <string name="hide_notch_summary">Apps can not use the notch area</string>
 
 </resources>

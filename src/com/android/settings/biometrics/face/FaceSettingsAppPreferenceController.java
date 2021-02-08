@@ -26,7 +26,7 @@ import androidx.preference.Preference;
 
 import com.android.settings.Utils;
 
-import com.android.internal.util.custom.faceunlock.FaceUnlockUtils;
+import com.android.settings.custom.biometrics.FaceUtils;
 
 /**
  * Preference controller for Face settings page controlling the ability to use
@@ -80,7 +80,7 @@ public class FaceSettingsAppPreferenceController extends FaceSettingsPreferenceC
 
     @Override
     public int getAvailabilityStatus() {
-        if (FaceUnlockUtils.hasMotoFaceUnlock() ){
+        if (FaceUtils.isFaceUnlockSupported()){
             return UNSUPPORTED_ON_DEVICE;
         }
 

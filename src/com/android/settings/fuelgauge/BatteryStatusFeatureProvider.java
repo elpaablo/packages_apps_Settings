@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+
 package com.android.settings.fuelgauge;
 
 /**
@@ -24,5 +25,6 @@ public interface BatteryStatusFeatureProvider {
     /**
      * Trigger a battery status update; return false if built-in status should be used.
      */
-    boolean triggerBatteryStatusUpdate(BatteryInfo info);
+    boolean triggerBatteryStatusUpdate(
+            BatteryHeaderPreferenceController batteryHeaderPreferenceController, BatteryInfo info);
 }

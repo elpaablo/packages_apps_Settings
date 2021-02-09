@@ -30,7 +30,8 @@ public class BatteryStatusFeatureProviderImpl implements BatteryStatusFeaturePro
     }
 
     @Override
-    public boolean triggerBatteryStatusUpdate(BatteryInfo info) {
+    public boolean triggerBatteryStatusUpdate(
+            BatteryHeaderPreferenceController batteryHeaderPreferenceController, BatteryInfo info) {
         return false;
     }
 }

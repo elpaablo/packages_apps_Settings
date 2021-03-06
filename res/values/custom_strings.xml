@@ -113,11 +113,7 @@
 
     <!-- OmniJaws -->
     <string name="weather_title">Weather settings</string>
-    <!-- Kernel profiles -->
-    <string name="system_custom_title">Custom</string>
-    <string name="system_custom_kernel_profiles_title">Kernel profiles</string>
-    <string name="system_custom_kernel_profiles_summary">Use kernel profiles</string>
-    
+
     <!-- hide notch -->
     <string name="hide_notch_title">Hide notch</string>
     <string name="hide_notch_summary">Apps can not use the notch area</string>

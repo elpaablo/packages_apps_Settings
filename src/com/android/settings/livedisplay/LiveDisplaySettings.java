@@ -124,7 +124,7 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements
     private LiveDisplayConfig mConfig;
 
     private LineageHardwareManager mHardware;
-
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -210,6 +210,23 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements
             liveDisplayPrefs.removePreference(mColorProfile);
         } else {
             mHasDisplayModes = true;
+            
+            // Define a default display color profile here
+            DisplayMode def = mHardware.getDefaultDisplayMode();
+            String defaultColorProfile = getResources().getString(
+                    R.string.config_defaultColorProfileName);
+            
+            if (def == null) {
+                Log.i(TAG, "onCreate ### Mode id: " + def.id + ", mode name: " + def.name);
+                for (DisplayMode mode : mHardware.getDisplayModes()) {
+                    if (mode.name == defaultColorProfile) {
+                        mHardware.setDisplayMode(mode, true);
+                        updateColorProfileSummary(defaultColorProfile);
+                        break;
+                    }
+                }
+            }
+            
             mColorProfile.setOnPreferenceChangeListener(this);
         }
 
@@ -383,6 +400,7 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements
             int id = Integer.valueOf((String)objValue);
             Log.i("LiveDisplay", "Setting mode: " + id);
             for (DisplayMode mode : mHardware.getDisplayModes()) {
+                Log.i(TAG, "onPreferenceChange ### Mode id: " + mode.id + ", mode name: " + mode.name);
                 if (mode.id == id) {
                     mHardware.setDisplayMode(mode, true);
                     updateColorProfileSummary((String)objValue);

@@ -75,7 +75,8 @@ android_library {
         "reactive-streams",
         "rxandroid",
         "VendorSupport-preference",
-        "faceunlock_framework",
+        "faceunlock_utils",
+        "SettingsLib-search",
     ],
 
     libs: [

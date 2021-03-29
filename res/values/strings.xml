@@ -7491,7 +7491,7 @@
     <!-- SIM status title  [CHAR LIMIT=40] -->
     <string name="sim_status_title">SIM status</string>
     <!-- SIM status title  [CHAR LIMIT=40] -->
-    <string name="sim_status_title_sim_slot">SIM status (sim slot %1$d)</string>
+    <string name="sim_status_title_sim_slot">SIM status (Slot %1$d)</string>
     <!-- Title for call back. [CHAR LIMIT=60] -->
     <string name="sim_call_back_title">Call back from default SIM</string>
     <!-- Title for outgoing back. [CHAR LIMIT=60] -->
@@ -7782,6 +7782,12 @@
 
     <!-- Sound: Title for the option defining the phone ringtone. [CHAR LIMIT=30] -->
     <string name="ringtone_title">Phone ringtone</string>
+
+    <!-- Sound: Title for the option defining the phone ringtone for slot1 on Muilti SIM device. [CHAR LIMIT=50] -->
+    <string name="ringtone1_title">Phone ringtone - SIM 1</string>
+
+    <!-- Sound: Title for the option defining the phone ringtone for slot2 on Muilti SIM device. [CHAR LIMIT=50] -->
+    <string name="ringtone2_title">Phone ringtone - SIM 2</string>
 
     <!-- Sound: Title for the option defining the default notification sound. [CHAR LIMIT=30] -->
     <string name="notification_ringtone_title">Default notification sound</string>

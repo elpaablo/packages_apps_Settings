@@ -94,7 +94,9 @@
 
         <Preference
             android:key="ambient_display_custom"
-            android:title="@string/advanced_settings" />
+            android:title="@string/advanced_settings"> 
+            <intent android:action="com.xiaomi.parts/com.xiaomi.parts.doze.DozeSettingsActivity" />
+        </Preference>
 
     </PreferenceCategory>
 

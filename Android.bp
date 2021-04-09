@@ -40,7 +40,7 @@ android_library {
     ],
 
     static_libs: [
-        "androidx-constraintlayout_constraintlayout",
+     "androidx-constraintlayout_constraintlayout",
         "androidx.slice_slice-builders",
         "androidx.slice_slice-core",
         "androidx.slice_slice-view",
@@ -74,8 +74,8 @@ android_library {
         "gson",
         "reactive-streams",
         "rxandroid",
+        "faceunlock_framework",
         "VendorSupport-preference",
-        "faceunlock_utils",
         "SettingsLib-search",
     ],
 

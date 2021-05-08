@@ -15,6 +15,15 @@
  */
 package com.android.settings.system;
 
+import android.content.SharedPreferences;
+import android.os.SELinux;
+import androidx.preference.SwitchPreference;
+import android.util.Log;
+
+import com.android.settings.utils.SuShell;
+import com.android.settings.utils.SuTask;
+import com.android.settings.utils.Util;
+
 import android.app.settings.SettingsEnums;
 import android.content.Context;
 import android.os.Bundle;
@@ -35,14 +44,22 @@ import com.android.settingslib.search.SearchIndexable;
 import java.util.Arrays;
 import java.util.List;
 
+import com.android.settings.utils.Constants;
+
 @SearchIndexable
-public class SystemDashboardFragment extends DashboardFragment {
+public class SystemDashboardFragment extends DashboardFragment implements
+        Preference.OnPreferenceChangeListener {
 
     private static final String TAG = "SystemDashboardFrag";
 
     private static final String KEY_RESET = "reset_dashboard";
 
     public static final String EXTRA_SHOW_AWARE_DISABLED = "show_aware_dialog_disabled";
+    
+    private static final String SELINUX_CATEGORY = "selinux";
+
+    private SwitchPreference mSelinuxMode;
+    private SwitchPreference mSelinuxPersistence;
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -53,9 +70,81 @@ public class SystemDashboardFragment extends DashboardFragment {
         if (getVisiblePreferenceCount(screen) == screen.getInitialExpandedChildrenCount() + 1) {
             screen.setInitialExpandedChildrenCount(Integer.MAX_VALUE);
         }
+        
+        // SELinux
+        Preference selinuxCategory = findPreference(SELINUX_CATEGORY);
+        mSelinuxMode = (SwitchPreference) findPreference(Constants.PREF_SELINUX_MODE);
+        mSelinuxMode.setChecked(SELinux.isSELinuxEnforced());
+        mSelinuxMode.setOnPreferenceChangeListener(this);
+        /*mSelinuxPersistence =
+                (SwitchPreference) findPreference(Constants.PREF_SELINUX_PERSISTENCE);
+        mSelinuxPersistence.setOnPreferenceChangeListener(this);
+        mSelinuxPersistence.setChecked(getContext()
+                .getSharedPreferences("selinux_pref", Context.MODE_PRIVATE)
+                .contains(Constants.PREF_SELINUX_MODE));*/
+        Util.requireRoot(getActivity(), selinuxCategory);
 
         showRestrictionDialog();
     }
+    
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        if (preference == mSelinuxMode) {
+            if ((Boolean) newValue) {
+                new SwitchSelinuxTask(getActivity()).execute(true);
+                setSelinuxEnabled(true, false /*mSelinuxPersistence.isChecked()*/);
+            } else {
+                new SwitchSelinuxTask(getActivity()).execute(false);
+                setSelinuxEnabled(false, false /*mSelinuxPersistence.isChecked()*/);
+            }
+            return true;
+        }/* else if (preference == mSelinuxPersistence) {
+            setSelinuxEnabled(mSelinuxMode.isChecked(), (Boolean) newValue);
+            return true;
+        }*/
+        return false;
+    }
+
+    private void setSelinuxEnabled(boolean status, boolean persistent) {
+        SharedPreferences.Editor editor = getContext()
+                .getSharedPreferences("selinux_pref", Context.MODE_PRIVATE).edit();
+        if (persistent) {
+            editor.putBoolean(Constants.PREF_SELINUX_MODE, status);
+        } else {
+            editor.remove(Constants.PREF_SELINUX_MODE);
+        }
+        editor.apply();
+        mSelinuxMode.setChecked(status);
+    }
+
+    private class SwitchSelinuxTask extends SuTask<Boolean> {
+        public SwitchSelinuxTask(Context context) {
+            super(context);
+        }
+        @Override
+        protected void sudoInBackground(Boolean... params) throws SuShell.SuDeniedException {
+            if (params.length != 1) {
+                Log.e(TAG, "SwitchSelinuxTask: invalid params count");
+                return;
+            }
+            if (params[0]) {
+                SuShell.runWithSuCheck("setenforce 1");
+            } else {
+                SuShell.runWithSuCheck("setenforce 0");
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
+            if (!result) {
+                // Did not work, so restore actual value
+                setSelinuxEnabled(SELinux.isSELinuxEnforced(), false /*mSelinuxPersistence.isChecked()*/);
+            }
+        }
+    }
+    
+    
 
     @VisibleForTesting
     public void showRestrictionDialog() {

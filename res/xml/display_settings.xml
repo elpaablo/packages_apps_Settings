@@ -52,6 +52,26 @@
         android:summary="@string/summary_placeholder"
         android:fragment="com.android.settings.display.AutoBrightnessSettings"
         settings:controller="com.android.settings.display.AutoBrightnessPreferenceController"/>
+        
+    <com.arrow.support.preferences.SystemSettingSwitchPreference
+        android:key="status_bar_brightness_control"
+        android:title="@string/status_bar_brightness_control_title"
+        android:summary="@string/status_bar_brightness_control_summary"
+        android:defaultValue="false"/>
+        
+    <com.arrow.support.preferences.SystemSettingSwitchPreference
+        android:key="display_cutout_hidden"
+        android:title="@string/hide_notch_title"
+        android:summary="@string/hide_notch_summary"
+        android:disableDependentsState="true"
+        android:defaultValue="false" />
+
+    <Preference
+        android:key="livedisplay"
+        android:title="@*android:string/live_display_title"
+        android:summary="@string/live_display_summary">
+        <intent android:action="com.android.settings.LIVEDISPLAY_SETTINGS" />
+    </Preference>
 
     <com.android.settingslib.RestrictedPreference
         android:key="wallpaper"

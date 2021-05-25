@@ -86,4 +86,7 @@
     <string name="advanced_keyboard_settings_title">Configurações avançadas</string>
     <string name="fod_gesture_title">Desbloquear com impressão digital quando a tela estiver desligada</string>
     <string name="fod_gesture_summary">Permite desbloquear o dispositivo sem ter que ligar a tela primeiro</string>
+    <!-- IME switcher -->
+    <string name="ime_switcher_enabled_title">Mostrar botão de teclado</string>
+    <string name="ime_switcher_enabled_summary">Mostrar na barra de navegação para uma mudança rápida entre teclados</string>
 </resources>

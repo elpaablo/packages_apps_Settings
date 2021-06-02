@@ -3485,7 +3485,7 @@
             android:permission="android.permission.BLUETOOTH_ADMIN">
             <intent-filter>
                 <action android:name="com.android.settings.action.LAUNCH_BLUETOOTH_PAIRING"/>
-            </intent-filter>/>
+            </intent-filter>
         </receiver>
 
         <!-- Face unlock -->
@@ -3511,6 +3511,17 @@
                        android:value="com.fluid.customisation.FluidCustomisation"/>
             <meta-data android:name="com.android.settings.summary"
                        android:resource="@string/fluid_customisation_summary"/>
+        </activity>
+        
+        <!-- System app remover -->
+        <activity android:name="com.fluid.customisation.SystemappRemover"
+            android:label="@string/system_app_remover_title"
+            android:taskAffinity="com.android.settings"
+            android:parentActivityName="com.android.settings.Settings">
+            <intent-filter>
+                <action android:name="com.fluid.customisation.ViewSystemAppRemover" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
     </application>
 </manifest>

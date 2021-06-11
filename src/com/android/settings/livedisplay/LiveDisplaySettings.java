@@ -58,7 +58,7 @@ import com.android.settings.custom.utils.ResourceUtils;
 
 import com.android.settings.custom.preference.CustomDialogPreference;
 
-import com.dot.support.preferences.SystemSettingSwitchPreference;
+import com.fluid.customisation.preference.SystemSettingSwitchPreference;
 
 import static com.android.internal.custom.hardware.LiveDisplayManager.FEATURE_ANTI_FLICKER;
 import static com.android.internal.custom.hardware.LiveDisplayManager.FEATURE_CABC;
@@ -419,7 +419,7 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements
 
     @Override
     public int getMetricsCategory() {
-        return MetricsEvent.CUSTOM;
+        return MetricsEvent.FLUID;
     }
 
     @Override

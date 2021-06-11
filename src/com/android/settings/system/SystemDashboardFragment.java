@@ -30,6 +30,7 @@ import android.app.settings.SettingsEnums;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.provider.SearchIndexableResource;
 import android.provider.Settings;
@@ -40,8 +41,6 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceScreen;
 import androidx.preference.SwitchPreference;
-
-import com.android.internal.custom.KernelProfileManager;
 
 import com.android.settings.R;
 import com.android.settings.dashboard.DashboardFragment;
@@ -72,16 +71,18 @@ public class SystemDashboardFragment extends DashboardFragment implements
 
     private SwitchPreference mSelinuxMode;
     private SwitchPreference mSelinuxPersistence;
-    public static final String KERNEL_PROFILES_ENABLED_KEY = "kernel_profiles_enabled";
-
-    public static final String KERNEL_PROFILE = "kernel_profile";
 
     private static final String PREF_SYSTEM_APP_REMOVER = "system_app_remover";
     private static final String PREF_ADBLOCK = "persist.aicp.hosts_block";
 
+    private static final String KERNEL_PROFILE_KEY = "sys.kernel.profile";
+    private static final int PROFILE_DEFAULT = 2; //balanced
+    private static final int PROFILE_NONE = 0; //disabled
+    private static final String PREF_PROFILE = "kernel_profile";
+    
     private SwitchPreference mKernelProfilesPreference;
-    private KernelProfileManager manager;
     private Handler mHandler = new Handler();
+    private SharedPreferences pref;
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -98,19 +99,21 @@ public class SystemDashboardFragment extends DashboardFragment implements
         mSelinuxMode = (SwitchPreference) findPreference(Constants.PREF_SELINUX_MODE);
         mSelinuxMode.setChecked(SELinux.isSELinuxEnforced());
         mSelinuxMode.setOnPreferenceChangeListener(this);
+        
         /*mSelinuxPersistence =
                 (SwitchPreference) findPreference(Constants.PREF_SELINUX_PERSISTENCE);
         mSelinuxPersistence.setOnPreferenceChangeListener(this);
         mSelinuxPersistence.setChecked(getContext()
                 .getSharedPreferences("selinux_pref", Context.MODE_PRIVATE)
                 .contains(Constants.PREF_SELINUX_MODE));*/
+        
         Util.requireRoot(getActivity(), selinuxCategory);
 
-        mKernelProfilesPreference = (SwitchPreference) findPreference(KERNEL_PROFILES_ENABLED_KEY);
-        mKernelProfilesPreference.setChecked(Settings.Secure.getIntForUser(getContentResolver(),
-                    Settings.Secure.KERNEL_PROFILES_ENABLED, 0, UserHandle.USER_CURRENT) == 1);
+        int profile = SystemProperties.getInt(KERNEL_PROFILE_KEY, PROFILE_DEFAULT);
+        mKernelProfilesPreference = (SwitchPreference) findPreference(KERNEL_PROFILE_KEY);
+        mKernelProfilesPreference.setChecked(profile > 0);
         mKernelProfilesPreference.setOnPreferenceChangeListener(this);
-
+        
         Preference systemAppRemover = findPreference(PREF_SYSTEM_APP_REMOVER);
         Util.requireRoot(getActivity(), systemAppRemover);
 
@@ -135,18 +138,20 @@ public class SystemDashboardFragment extends DashboardFragment implements
             return true;
         }*/
         else if (preference == mKernelProfilesPreference) {
+            pref = getActivity().getPreferences(Context.MODE_PRIVATE);
             boolean value = (Boolean) newValue;
             mKernelProfilesPreference.setChecked(value);
-            Settings.Secure.putInt(getContentResolver(),
-                Settings.Secure.KERNEL_PROFILES_ENABLED, value ? 1 : 0);
-
-            //if enabling kernel profiles, apply saved profile
-            if (value){
-                manager = new KernelProfileManager(getContext());
-                int profile = Settings.Secure.getIntForUser(getContentResolver(),
-                        Settings.Secure.KERNEL_PROFILE, KernelProfileManager.PROFILE_DEFAULT,
-                        UserHandle.USER_CURRENT);
-                manager.setProfile(profile);
+            
+            if (value){ //enable kernel profiles and restore saved profile
+                 SystemProperties.set(KERNEL_PROFILE_KEY, "" + 
+                         pref.getInt(PREF_PROFILE, PROFILE_DEFAULT));
+            }
+            else{ //disable kernel profiles and save current profile
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putInt(PREF_PROFILE, SystemProperties.getInt(
+                        KERNEL_PROFILE_KEY, PROFILE_DEFAULT));
+                editor.apply();
+                SystemProperties.set(KERNEL_PROFILE_KEY, "" + PROFILE_NONE); 
             }
             return true;
         } else if (PREF_ADBLOCK.equals(preference.getKey())) {
@@ -262,7 +267,7 @@ public class SystemDashboardFragment extends DashboardFragment implements
                 @Override
                 public List<String> getNonIndexableKeys(Context context) {
                     final List<String> result = new ArrayList<String>();
-                    result.add(KERNEL_PROFILES_ENABLED_KEY);
+                    result.add(KERNEL_PROFILE_KEY);
                     return result;
                 }
             };

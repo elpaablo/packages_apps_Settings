@@ -79,9 +79,9 @@
         settings:key="system_custom_category"
         settings:title="@string/system_custom_title">
         <SwitchPreference
-             settings:key="kernel_profiles_enabled"
+             settings:key="sys.kernel.profile"
              settings:title="@string/system_custom_kernel_profiles_title"
-             settings:summary="@string/system_custom_kernel_profiles_summary"
+             settings:summary="@string/system_custom_kernel_profiles_summary" 
              settings:icon="@drawable/ic_kernel_profiles" />
 
         <Preference
@@ -101,7 +101,8 @@
     <!-- SELinux -->
     <PreferenceCategory
         android:key="selinux"
-        android:title="@string/selinux_category">
+        android:title="@string/selinux_category"
+        android:visibility="gone">
 
         <Preference
             android:summary="@string/selinux_explanation_summary"

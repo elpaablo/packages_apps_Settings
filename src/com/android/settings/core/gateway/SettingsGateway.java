@@ -317,7 +317,7 @@ public class SettingsGateway {
             MediaControlsSettings.class.getName(),
             GlobalActionsSettings.class.getName(),
             HardwareKeys.class.getName(),
-            GestureSettings.class.getName()
+            GestureSettings.class.getName(),
             LiveDisplaySettings.class.getName()
     };
 

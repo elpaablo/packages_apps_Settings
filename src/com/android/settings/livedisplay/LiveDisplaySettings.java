@@ -58,7 +58,7 @@ import com.android.settings.custom.utils.ResourceUtils;
 
 import com.android.settings.custom.preference.CustomDialogPreference;
 
-import com.dot.support.preferences.SystemSettingSwitchPreference;
+import com.arrow.support.preferences.SystemSettingSwitchPreference;
 
 import static com.android.internal.custom.hardware.LiveDisplayManager.FEATURE_ANTI_FLICKER;
 import static com.android.internal.custom.hardware.LiveDisplayManager.FEATURE_CABC;
@@ -419,7 +419,7 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements
 
     @Override
     public int getMetricsCategory() {
-        return MetricsEvent.CUSTOM;
+        return MetricsEvent.ARROW;
     }
 
     @Override
@@ -489,11 +489,11 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements
                 }
                 result.add(KEY_LIVE_DISPLAY_TEMPERATURE);
             }
-            if (!context.getResources().getBoolean(
+            /*if (!context.getResources().getBoolean(
                     com.android.internal.R.bool.config_enableLiveDisplay)) {
                 result.add(KEY_LIVE_DISPLAY_TEMPERATURE);
                 result.add(KEY_LIVE_DISPLAY);
-            }
+            }*/
             if (!config.hasFeature(FEATURE_ANTI_FLICKER)) {
                 result.add(KEY_LIVE_DISPLAY_ANTI_FLICKER);
             }

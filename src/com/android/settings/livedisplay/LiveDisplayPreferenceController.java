@@ -28,8 +28,8 @@ public class LiveDisplayPreferenceController extends BasePreferenceController {
 
     @Override
     public int getAvailabilityStatus() {
-        return mContext.getResources().getBoolean(
-                com.android.internal.R.bool.config_enableLiveDisplay) ? AVAILABLE : UNSUPPORTED_ON_DEVICE;
+        return 1; //mContext.getResources().getBoolean(
+                //com.android.internal.R.bool.config_enableLiveDisplay) ? AVAILABLE : UNSUPPORTED_ON_DEVICE;
     }
 
 }

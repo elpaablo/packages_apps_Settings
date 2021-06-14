@@ -75,4 +75,51 @@
                 android:targetClass="@string/additional_system_update_menu"/>
     </Preference>
 
+    <PreferenceCategory
+        settings:key="system_custom_category"
+        settings:title="@string/system_custom_title">
+        <SwitchPreference
+             settings:key="kernel_profiles_enabled"
+             settings:title="@string/system_custom_kernel_profiles_title"
+             settings:summary="@string/system_custom_kernel_profiles_summary"
+             settings:icon="@drawable/ic_kernel_profiles" />
+
+        <Preference
+            android:key="system_app_remover"
+            android:title="@string/system_app_remover_title"
+            android:summary="@string/system_app_remover_summary">
+            <intent android:action="com.android.settings.ViewSystemAppRemover" />
+        </Preference>
+
+        <com.arrow.support.preferences.SystemPropSwitchPreference
+            android:key="persist.aicp.hosts_block"
+            android:title="@string/hosts_block_title"
+            android:summary="@string/hosts_block_summary"
+           android:defaultValue="false" />
+    </PreferenceCategory>
+
+    <!-- SELinux -->
+    <PreferenceCategory
+        android:key="selinux"
+        android:title="@string/selinux_category">
+
+        <Preference
+            android:summary="@string/selinux_explanation_summary"
+            android:selectable="false"/>
+
+        <SwitchPreference
+            android:key="selinux_mode"
+            android:title="@string/selinux_mode_title"
+            android:summaryOn="@string/selinux_enforcing_summary"
+            android:summaryOff="@string/selinux_permissive_summary" />
+
+        <!-- SwitchPreference
+            android:key="selinux_persistence"
+            android:title="@string/selinux_persistence_title"
+            android:summary="@string/selinux_persistence_summary"
+            android:defaultValue="true" /-->
+
+    </PreferenceCategory>
+
+
 </PreferenceScreen>

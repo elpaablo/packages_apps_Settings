@@ -124,6 +124,10 @@
     <!-- Screen off fod -->
     <string name="fod_gesture_title">Unlock with fingerprint when the screen is off</string>
     <string name="fod_gesture_summary">Allows unlocking the device without having to wake up the screen first</string>
+    
+    <!-- IME switcher -->
+    <string name="ime_switcher_enabled_title">Show keyboard button</string>
+    <string name="ime_switcher_enabled_summary">Show on navigation bar for quick switching between input methods</string>
 
     <!-- Face Unlock -->
     <string name="face_unlock_method_title">Allow face unlock on lock screen</string>

@@ -89,4 +89,7 @@
     <string name="face_unlock_method_title">Permitir o desbloqueio facial na tela de bloqueio</string>
     <string name="face_unlock_method_default">Quando a tela estiver ligada</string>
     <string name="face_unlock_method_swipe">Quando deslizar na tela de bloqueio</string>
+    <!-- IME switcher -->
+    <string name="ime_switcher_enabled_title">Mostrar botão de teclado</string>
+    <string name="ime_switcher_enabled_summary">Mostrar na barra de navegação para uma mudança rápida entre teclados</string>
 </resources>

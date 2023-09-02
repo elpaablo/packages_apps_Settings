@@ -21,7 +21,6 @@ import android.os.RemoteException;
 import android.util.Log;
 
 import androidx.preference.Preference;
-import androidx.preference.SwitchPreference;
 
 import com.android.settings.core.BasePreferenceController;
 
@@ -32,8 +31,7 @@ import java.util.NoSuchElementException;
 /**
  * Controller to change and update the fast charging toggle
  */
-public class FastChargingPreferenceController extends BasePreferenceController
-        implements Preference.OnPreferenceChangeListener {
+public class FastChargingPreferenceController extends BasePreferenceController {
 
     private static final String KEY_FAST_CHARGING = "fast_charging";
     private static final String TAG = "FastChargingPreferenceController";
@@ -52,33 +50,5 @@ public class FastChargingPreferenceController extends BasePreferenceController
     @Override
     public int getAvailabilityStatus() {
         return mFastCharge != null ? AVAILABLE : UNSUPPORTED_ON_DEVICE;
-    }
-
-    @Override
-    public void updateState(Preference preference) {
-        super.updateState(preference);
-        boolean fastChargingEnabled = false;
-
-        try {
-            fastChargingEnabled = mFastCharge.isEnabled();
-        } catch (RemoteException e) {
-            Log.e(TAG, "isEnabled failed", e);
-        }
-
-        ((SwitchPreference) preference).setChecked(fastChargingEnabled);
-    }
-
-    @Override
-    public boolean onPreferenceChange(Preference preference, Object newValue) {
-        final boolean shouldEnableFastCharging = (Boolean) newValue;
-
-        try {
-            mFastCharge.setEnabled(shouldEnableFastCharging);
-            updateState(preference);
-        } catch (RemoteException e) {
-            Log.e(TAG, "setEnabled failed", e);
-        }
-
-        return false;
     }
 }

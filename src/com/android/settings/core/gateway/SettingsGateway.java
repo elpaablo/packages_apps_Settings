@@ -201,8 +201,8 @@ import com.android.settings.wifi.p2p.WifiP2pSettings;
 import com.android.settings.wifi.savedaccesspoints2.SavedAccessPointsWifiSettings2;
 import com.android.settings.wifi.tether.WifiTetherSettings;
 
-import com.crdroid.settings.crDroidSettingsLayout;
-import com.crdroid.settings.fragments.ui.SmartPixels;
+import com.alpha.settings.AlphaSettings;
+import com.alpha.settings.fragments.ui.SmartPixels;
 
 import con.android.settings.wifi.tether.WifiTetherClientManager;
 
@@ -394,7 +394,7 @@ public class SettingsGateway {
             ScreenTimeoutSettings.class.getName(),
             ResetNetwork.class.getName(),
             VibrationIntensitySettingsFragment.class.getName(),
-            crDroidSettingsLayout.class.getName(),
+            AlphaSettings.class.getName(),
             RunningServices.class.getName(),
             SmartPixels.class.getName(),
             WifiTetherClientManager.class.getName(),
@@ -444,7 +444,7 @@ public class SettingsGateway {
             UserBackupSettingsActivity.class.getName(),
             Settings.MemtagPageActivity.class.getName(),
             Settings.NavigationModeSettingsActivity.class.getName(),
-            Settings.crDroidSettingsLayoutActivity.class.getName(),
+            Settings.AlphaSettingsActivity.class.getName(),
             Settings.DevRunningServicesActivity.class.getName(),
             Settings.SmartPixelsActivity.class.getName(),
     };

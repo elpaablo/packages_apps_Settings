@@ -37,19 +37,6 @@ public class FirmwareVersionSettings extends DashboardFragment {
 
 
     @Override
-    protected List<AbstractPreferenceController> createPreferenceControllers(Context context) {
-        return buildPreferenceControllers(context, this /* fragment */, getSettingsLifecycle());
-    }
-
-    private static List<AbstractPreferenceController> buildPreferenceControllers(
-            Context context, FirmwareVersionSettings fragment, Lifecycle lifecycle) {
-        final List<AbstractPreferenceController> controllers = new ArrayList<>();
-        controllers.add(new BuildStatusPreferenceController(context));
-        controllers.add(new SELinuxStatusPreferenceController(context));
-        return controllers;
-    }
-
-    @Override
     protected int getPreferenceScreenResId() {
         return R.xml.firmware_version;
     }
@@ -64,17 +51,9 @@ public class FirmwareVersionSettings extends DashboardFragment {
         return SettingsEnums.DIALOG_FIRMWARE_VERSION;
     }
 
-    /**
-     * For Search.
+ /**
+     * For search
      */
     public static final BaseSearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =
-            new BaseSearchIndexProvider(R.xml.firmware_version) {
-
-                @Override
-                public List<AbstractPreferenceController> createPreferenceControllers(
-                        Context context) {
-                    return buildPreferenceControllers(context, null /* fragment */,
-                            null /* lifecycle */);
-                }
-            };
+            new BaseSearchIndexProvider(R.xml.firmware_version);
 }

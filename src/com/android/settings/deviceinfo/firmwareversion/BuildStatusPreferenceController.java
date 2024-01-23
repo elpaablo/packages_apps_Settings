@@ -55,7 +55,7 @@ public class BuildStatusPreferenceController extends AbstractPreferenceControlle
         if (isOfficial()) {
             return mContext.getString(R.string.build_status_official);
         }
-        return "";
+        return mContext.getString(R.string.build_status_unofficial);
     }
 
     @Override

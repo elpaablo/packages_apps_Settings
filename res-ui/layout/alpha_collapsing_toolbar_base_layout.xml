@@ -14,32 +14,12 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<!-- The main content view -->
-<LinearLayout
-    android:id="@+id/main_content"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/content_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:transitionGroup="true"
-    android:orientation="vertical"
-    android:layout_marginBottom="24dp">
+    android:fitsSystemWindows="true">
 
-    <LinearLayout
-        android:id="@+id/alpha_action_bar_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <Toolbar
-            android:id="@+id/action_bar"
-            style="?android:attr/actionBarStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="?android:attr/actionBarTheme" />
-        <include layout="@layout/alpha_settings_logo"/>
-    </LinearLayout>
-    <FrameLayout
-        android:id="@+id/content_frame"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-</LinearLayout>
+    <include layout="@layout/alpha_collapsing_toolbar_content_layout"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,24 +1,24 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="234.41dp"
-    android:height="209.57dp"
-    android:viewportWidth="234.41"
-    android:viewportHeight="209.57">
+    android:width="120dp"
+    android:height="130dp"
+    android:viewportWidth="235"
+    android:viewportHeight="210">
   <path
       android:pathData="m105.17,3.28c11.49,-6.63 26.17,-2.7 32.81,8.79l93.22,161.46c6.63,11.49 2.7,26.17 -8.79,32.81 -11.49,6.63 -26.17,2.7 -32.81,-8.79L117.2,72.17 73.51,147.84c-6.63,11.49 -21.32,15.42 -32.81,8.79 -11.49,-6.63 -15.42,-21.32 -8.79,-32.81L95.61,13.51c2.03,-4.14 5.26,-7.74 9.56,-10.22z"
-      android:fillColor="@color/alpha_color_accent"
+      android:fillColor="?android:attr/textColorPrimary"
       android:fillType="evenOdd"/>
   <group>
     <clip-path
         android:pathData="m105.17,3.22c11.49,-6.63 26.17,-2.7 32.81,8.79l93.22,161.46c6.63,11.49 2.7,26.17 -8.79,32.81 -11.49,6.63 -26.17,2.7 -32.81,-8.79l-72.39,-125.39 -72.45,125.48c-6.63,11.49 -21.32,15.42 -32.81,8.79 -11.49,-6.63 -15.42,-21.32 -8.79,-32.81l92.45,-160.13c2.03,-4.14 5.26,-7.74 9.56,-10.22z"
-        android:fillColor="@color/alpha_color_accent"
+        android:fillColor="?android:attr/textColorPrimary"
         android:fillType="evenOdd"/>
     <path
         android:pathData="m168.89,15.56c-11.91,-20.63 -38.29,-27.7 -58.92,-15.79l-1.97,1.13 31.78,55.05c6.27,10.86 20.15,14.58 31.01,8.31v0c10.86,-6.27 14.58,-20.15 8.31,-31.01z"
-        android:fillColor="@color/alpha_color_secondary_accent"
+        android:fillColor="?android:attr/colorAccent"
         android:fillType="evenOdd"/>
   </group>
   <path
       android:pathData="m13.51,169.02c-1.2,-2.08 -0.49,-4.75 1.6,-5.95 2.08,-1.2 4.75,-0.49 5.95,1.6l7.8,13.51c0.64,-0.3 1.29,-0.58 1.95,-0.85 6.74,-2.79 13.96,-4.23 21.26,-4.23 7.3,0 14.52,1.44 21.26,4.23 0.7,0.29 1.39,0.59 2.07,0.91l7.83,-13.56c1.2,-2.08 3.87,-2.8 5.95,-1.6 2.08,1.2 2.8,3.87 1.6,5.95l-7.78,13.47c2.99,2.01 5.79,4.3 8.35,6.87 5.16,5.16 9.25,11.28 12.04,18.02 0.26,0.62 0.5,1.24 0.74,1.87L0,209.26c0.23,-0.63 0.48,-1.25 0.74,-1.87 2.79,-6.74 6.88,-12.86 12.04,-18.02 2.59,-2.59 5.43,-4.92 8.47,-6.94zM24.83,195.31c0,-2.17 1.75,-3.92 3.92,-3.92 2.16,0 3.92,1.76 3.92,3.92 0,2.16 -1.76,3.92 -3.92,3.92 -2.17,0 -3.92,-1.76 -3.92,-3.92zM74.94,191.39c-2.17,0 -3.92,1.76 -3.92,3.92 0,2.16 1.75,3.92 3.92,3.92 2.16,0 3.92,-1.76 3.92,-3.92 0,-2.17 -1.76,-3.92 -3.92,-3.92z"
-      android:fillColor="@color/alpha_color_accent"
+      android:fillColor="?android:attr/textColorPrimary"
       android:fillType="evenOdd"/>
 </vector>

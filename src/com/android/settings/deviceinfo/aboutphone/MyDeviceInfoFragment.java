@@ -115,7 +115,7 @@ public class MyDeviceInfoFragment extends DashboardFragment
     public void onPause() {
         super.onPause();
         Context context = getContext();
-        if (context != null) {
+        if (context != null && mSimStateReceiver != null) {
             context.unregisterReceiver(mSimStateReceiver);
         } else {
             Log.i(LOG_TAG, "context already null, not unregistering SimStateReceiver");
@@ -126,7 +126,7 @@ public class MyDeviceInfoFragment extends DashboardFragment
     public void onResume() {
         super.onResume();
         Context context = getContext();
-        if (context != null) {
+        if (context != null && mSimStateReceiver != null) {
             context.registerReceiver(mSimStateReceiver,
                     new IntentFilter(TelephonyIntents.ACTION_SIM_STATE_CHANGED));
         } else {

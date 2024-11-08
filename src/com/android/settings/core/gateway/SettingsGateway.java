@@ -210,6 +210,8 @@ import com.android.settings.wifi.savedaccesspoints2.SavedAccessPointsWifiSetting
 import com.android.settings.wifi.tether.WifiTetherSettings;
 import com.alpha.settings.fragments.misc.SmartPixels;
 
+import com.alpha.settings.AlphaSettings;
+
 public class SettingsGateway {
 
     /**
@@ -403,6 +405,7 @@ public class SettingsGateway {
             CellularSecuritySettingsFragment.class.getName(),
             AccessibilityHearingAidsFragment.class.getName(),
             HearingDevicePairingFragment.class.getName(),
+            AlphaSettings.class.getName(),
             ZenModesListFragment.class.getName(),
             ZenModeFragment.class.getName(),
             RunningServices.class.getName(),
@@ -454,6 +457,7 @@ public class SettingsGateway {
             UserBackupSettingsActivity.class.getName(),
             Settings.MemtagPageActivity.class.getName(),
             Settings.NavigationModeSettingsActivity.class.getName(),
+            Settings.AlphaSettingsActivity.class.getName(),
             Settings.DevRunningServicesActivity.class.getName(),
             Settings.SmartPixelsActivity.class.getName(),
             Settings.PrivateDnsSettingsActivity.class.getName(),

@@ -80,7 +80,7 @@ public class RingtonePreference extends Preference {
                 true);
         String packageName = context.getString(R.string.config_sound_picker_package_name);
         Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
-        if (com.android.internal.util.crdroid.Utils.isPackageInstalled(context, packageName)) {
+        if (com.android.internal.util.alpha.Utils.isPackageInstalled(context, packageName)) {
             intent.setPackage(packageName);
         }
         setIntent(intent);

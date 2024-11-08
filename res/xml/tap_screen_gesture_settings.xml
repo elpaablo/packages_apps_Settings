@@ -35,7 +35,7 @@
         android:key="gesture_tap_category"
         android:title="@string/ambient_display_tap_screen_summary" />
 
-    <com.crdroid.settings.preferences.SecureSettingSwitchPreference
+    <com.alpha.settings.preferences.SecureSettingSwitchPreference
         android:key="doze_tap_gesture_ambient"
         android:title="@string/doze_gesture_ambient_title"
         android:summary="@string/doze_gesture_ambient_summary"

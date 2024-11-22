@@ -110,4 +110,11 @@
     <string name="hide_from_launcher_title">Hide from launcher</string>
     <string name="hide_from_launcher_summary">Prevent this application from showing up in any launcher. Requires a launcher restart for changes to take effect.</string>
 
+    <!-- QuickSwitch -->
+    <string name="quickswitch_launcher_title">AlphaDroid launcher</string>
+    <string name="quickswitch_launcher_summary">Change AlphaDroid built-in launcher</string>
+    <string name="quickswitch_launcher3">Launcher3</string>
+    <string name="quickswitch_nexuslauncher">Nexus Launcher</string>
+    <string name="quickswitch_lawnchair">Lawnchair</string>
+
 </resources>

@@ -66,4 +66,11 @@
     <string name="reset_settings_title">Reset settings</string>
     <string name="reset_settings_message">This will reset most AlphaDroid settings to their default values for the current user. Would you like to continue?</string>
 
+    <!-- QuickSwitch -->
+    <string name="quickswitch_launcher_title">AlphaDroid launcher</string>
+    <string name="quickswitch_launcher_summary">Change AlphaDroid built-in launcher</string>
+    <string name="quickswitch_launcher3">Launcher3</string>
+    <string name="quickswitch_nexuslauncher">Nexus Launcher</string>
+    <string name="quickswitch_lawnchair">Lawnchair</string>
+
 </resources>

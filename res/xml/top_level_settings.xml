@@ -21,11 +21,12 @@
     android:key="top_level_settings">
 
     <com.android.settings.widget.HomepagePreference
+        android:fragment="com.alpha.settings.AlphaSettings"
+        android:icon="@drawable/ic_settings_alpha"
         android:key="top_level_alpha_settings"
+        android:order="-160"
         android:title="@string/alpha_settings_title"
         android:summary="@string/alpha_settings_summary"
-        android:order="-204"
-        android:fragment="com.alpha.settings.AlphaSettings"
         settings:controller="com.alpha.settings.TopLevelAlphaEntryPreferenceController" />
 
     <com.android.settings.widget.HomepagePreference

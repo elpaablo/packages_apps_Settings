@@ -28,7 +28,7 @@ import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceGroupAdapter;
 import androidx.preference.PreferenceViewHolder;
 
-import com.android.settings.flags.Flags;
+import com.android.settings.Utils;
 import com.android.settingslib.widget.theme.R;
 
 import java.util.ArrayList;
@@ -46,6 +46,8 @@ public class RoundCornerPreferenceAdapter extends PreferenceGroupAdapter {
 
     private final Handler mHandler;
 
+    private boolean mRevamped = true;
+
     private final Runnable mSyncRunnable = new Runnable() {
         @Override
         public void run() {
@@ -57,6 +59,7 @@ public class RoundCornerPreferenceAdapter extends PreferenceGroupAdapter {
         super(preferenceGroup);
         mPreferenceGroup = preferenceGroup;
         mHandler = new Handler(Looper.getMainLooper());
+        mRevamped = Utils.revamped(preferenceGroup.getContext());
         updatePreferences();
     }
 
@@ -70,7 +73,8 @@ public class RoundCornerPreferenceAdapter extends PreferenceGroupAdapter {
     @Override
     public void onBindViewHolder(@NonNull PreferenceViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
-        if (Flags.homepageRevamp()) {
+        boolean revamped = Utils.revamped(holder.itemView.getContext());
+        if (mRevamped) {
             updateBackground(holder, position);
         }
     }
@@ -105,7 +109,7 @@ public class RoundCornerPreferenceAdapter extends PreferenceGroupAdapter {
 
     @SuppressWarnings("WeakerAccess") /* synthetic access */
     private void updatePreferences() {
-        if (Flags.homepageRevamp()) {
+        if (mRevamped) {
             mRoundCornerMappingList = new ArrayList<>();
             mappingPreferenceGroup(mRoundCornerMappingList, mPreferenceGroup);
         }
@@ -161,7 +165,6 @@ public class RoundCornerPreferenceAdapter extends PreferenceGroupAdapter {
     /** handle roundCorner background */
     private void updateBackground(PreferenceViewHolder holder, int position) {
         @DrawableRes int backgroundRes = getRoundCornerDrawableRes(position, false /* isSelected*/);
-
         View v = holder.itemView;
         v.setBackgroundResource(backgroundRes);
     }

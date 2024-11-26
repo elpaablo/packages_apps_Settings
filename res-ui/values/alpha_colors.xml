@@ -17,9 +17,28 @@
 <resources>
     <color name="contextual_card_stroke_color">#1f000000</color>
     <color name="build_status_card_bg">@android:color/system_neutral1_50</color>
-    <color name="alpha_color_accent_dark">@android:color/system_accent1_600</color>
-    <color name="alpha_color_accent_light">@android:color/system_accent1_400</color>
-    <color name="alpha_color_secondary_accent">@android:color/system_accent2_500</color>
-    <color name="alpha_color_tertiary_accent">@android:color/system_accent3_400</color>
+
+    <color name="alpha_color_primary_accent_dark">@android:color/system_accent1_700</color>
+    <color name="alpha_color_primary_accent">@android:color/system_accent1_600</color>
+    <color name="alpha_color_secondary_accent_dark">@android:color/system_accent2_700</color>
+    <color name="alpha_color_secondary_accent">@android:color/system_accent2_600</color>
+    <color name="alpha_color_tertiary_accent">@android:color/system_accent3_600</color>
     <color name="alpha_color_background_accent">@android:color/system_accent2_100</color>
+    <color name="alpha_color_primary">@android:color/system_neutral1_900</color>
+    <color name="alpha_color_background1">@android:color/system_neutral1_50</color>
+    <color name="alpha_color_background2">@android:color/system_neutral1_100</color>
+    <color name="alpha_color_background_accent1">@android:color/system_accent1_600</color>
+    <color name="alpha_color_background_accent3">@android:color/system_accent3_600</color>
+    <color name="alpha_color_ripple">#1f000000</color>
+
+    <color name="dot_preference_background_color">@android:color/system_surface_bright_light</color>
+    <color name="dot_selected_background_color">@android:color/system_surface_container_high_light</color>
+
+    <color name="nad_round_background_color">@android:color/system_surface_bright_light</color>
+    <color name="nad_selected_background_color">@android:color/system_surface_container_high_light</color>
+    <color name="nad_preference_accent_color_primary">@android:color/system_accent1_400</color>
+    <color name="nad_preference_accent_color_secondary">@android:color/system_accent1_200</color>
+    <color name="nad_color_gradient_end">@android:color/system_neutral2_50</color>
+    <color name="nad_color_gradient_start">@android:color/system_neutral2_100</color>
+    <color name="nad_color_background_tint">@android:color/system_neutral2_10</color>
 </resources>

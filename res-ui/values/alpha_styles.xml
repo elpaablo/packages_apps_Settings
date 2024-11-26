@@ -5,4 +5,26 @@
     <declare-styleable name="DeviceCardView">
         <attr name="extra_title" format="string"/>
     </declare-styleable>
+
+    <style name="DotPreferenceTop">
+        <item name="android:layout_marginBottom">2dp</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:background">@drawable/dot_preference_background_top</item>
+    </style>
+
+    <style name="DotPreferenceMiddle">
+        <item name="android:layout_marginBottom">2dp</item>
+        <item name="android:background">@drawable/dot_preference_background_middle</item>
+    </style>
+
+    <style name="DotPreferenceBottom">
+        <item name="android:layout_marginBottom">6dp</item>
+        <item name="android:background">@drawable/dot_preference_background_bottom</item>
+    </style>
+
+    <style name="DotPreferenceSingle">
+        <item name="android:layout_marginBottom">6dp</item>
+        <item name="android:layout_marginTop">6dp</item>
+        <item name="android:background">@drawable/dot_preference_background_single</item>
+    </style>
 </resources>

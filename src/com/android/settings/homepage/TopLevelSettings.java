@@ -16,6 +16,10 @@
 
 package com.android.settings.homepage;
 
+import static com.android.settings.alpha.AlphaConstants.DASHBOARD_STYLE_AOSP_LEGACY;
+import static com.android.settings.alpha.AlphaConstants.DASHBOARD_STYLE_AOSP_REVAMPED;
+import static com.android.settings.alpha.AlphaConstants.DASHBOARD_STYLE_DOT;
+import static com.android.settings.alpha.AlphaConstants.DASHBOARD_STYLE_NAD;
 import static com.android.settings.search.actionbar.SearchMenuController.NEED_SEARCH_ICON_IN_ACTION_BAR;
 import static com.android.settingslib.search.SearchIndexable.MOBILE;
 
@@ -47,7 +51,6 @@ import com.android.settings.activityembedding.ActivityEmbeddingUtils;
 import com.android.settings.core.RoundCornerPreferenceAdapter;
 import com.android.settings.core.SubSettingLauncher;
 import com.android.settings.dashboard.DashboardFragment;
-import com.android.settings.flags.Flags;
 import com.android.settings.overlay.FeatureFactory;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settings.support.SupportPreferenceController;
@@ -66,12 +69,19 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
     private static final String SAVED_HIGHLIGHT_MIXIN = "highlight_mixin";
     private static final String PREF_KEY_SUPPORT = "top_level_support";
 
+    private static final String DOT_TOP_MENU_KEY = "dot_top_menu_key";
+    private static final String TOP_LEVEL_ALPHA_CATEGORY= "top_level_alpha_category";
+
     private boolean mIsEmbeddingActivityEnabled;
     private TopLevelHighlightMixin mHighlightMixin;
     private int mPaddingHorizontal;
     private boolean mScrollNeeded = true;
     private boolean mFirstStarted = true;
     private ActivityEmbeddingController mActivityEmbeddingController;
+
+    private static int sResId = -1;
+    private int mDashboardStyle = DASHBOARD_STYLE_AOSP_REVAMPED;
+    private boolean mRevamped;
 
     public TopLevelSettings() {
         final Bundle args = new Bundle();
@@ -89,7 +99,21 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
 
     @Override
     protected int getPreferenceScreenResId() {
-        return Flags.homepageRevamp() ? R.xml.top_level_settings_v2 : R.xml.top_level_settings;
+        switch (mDashboardStyle) {
+            case DASHBOARD_STYLE_AOSP_LEGACY:
+                sResId = R.xml.top_level_settings;
+                break;
+            case DASHBOARD_STYLE_DOT:
+                sResId = R.xml.top_level_settings_dot;
+                break;
+            case DASHBOARD_STYLE_NAD:
+                sResId = R.xml.top_level_settings_nad;
+                break;
+            default:
+                sResId = R.xml.top_level_settings_v2;
+                break;
+        }
+        return sResId;
     }
 
     @Override
@@ -105,6 +129,8 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        mDashboardStyle = Utils.getDashboardStyle(context);
+        mRevamped = Utils.revamped(context);
         HighlightableMenu.fromXml(context, getPreferenceScreenResId());
         use(SupportPreferenceController.class).setActivity(getActivity());
     }
@@ -213,16 +239,15 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         super.onCreatePreferences(savedInstanceState, rootKey);
-        if (Flags.homepageRevamp()) {
-            return;
+        if (!mRevamped) {
+            int tintColor = Utils.getHomepageIconColor(getContext());
+            iteratePreferences(preference -> {
+                Drawable icon = preference.getIcon();
+                if (icon != null) {
+                    icon.setTint(tintColor);
+                }
+            });
         }
-        int tintColor = Utils.getHomepageIconColor(getContext());
-        iteratePreferences(preference -> {
-            Drawable icon = preference.getIcon();
-            if (icon != null) {
-                icon.setTint(tintColor);
-            }
-        });
     }
 
     @Override
@@ -346,7 +371,7 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
             return mHighlightMixin.onCreateAdapter(this, preferenceScreen, mScrollNeeded);
         }
 
-        if (Flags.homepageRevamp()) {
+        if (mRevamped) {
             return new RoundCornerPreferenceAdapter(preferenceScreen);
         }
         return super.onCreateAdapter(preferenceScreen);
@@ -382,7 +407,43 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
             Preference preference = group.getPreference(i);
             job.doForEach(preference);
             if (preference instanceof PreferenceCategory) {
+                if (mDashboardStyle == DASHBOARD_STYLE_DOT) {
+                    setDotLayout((PreferenceCategory) preference);
+                }
                 iteratePreferences((PreferenceCategory) preference, job);
+            }
+        }
+    }
+
+    private void setDotLayout(PreferenceGroup group) {
+        Preference preference;
+        String groupKey = group.getKey();
+        if (groupKey == null || TOP_LEVEL_ALPHA_CATEGORY.equals(groupKey)) {
+            return;
+        }
+        int count = group.getPreferenceCount();
+        if (count == 0) return;
+
+        if (count == 1) { // single
+            preference = group.getPreference(0);
+            if (preference != null) {
+                preference.setLayoutResource(R.layout.dot_homepage_preference_single);
+            }
+            return;
+        }
+
+        for (int i = 0; i < count; i++) {
+            preference = group.getPreference(i);
+            if (preference == null) continue;
+            String key = preference.getKey();
+            if (key != null && !DOT_TOP_MENU_KEY.equals(key)) {
+                if (i == 0) { //first
+                    preference.setLayoutResource(R.layout.dot_homepage_preference_top);
+                } else if (i == (count - 1)) { // last
+                    preference.setLayoutResource(R.layout.dot_homepage_preference_bottom);
+                } else { // middle
+                    preference.setLayoutResource(R.layout.dot_homepage_preference_middle);
+                }
             }
         }
     }
@@ -396,9 +457,7 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
 
     public static final BaseSearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =
             new BaseSearchIndexProvider(
-                    Flags.homepageRevamp()
-                            ? R.xml.top_level_settings_v2
-                            : R.xml.top_level_settings) {
+                    sResId != -1 ? sResId : R.xml.top_level_settings_v2) {
 
                 @Override
                 protected boolean isPageSearchEnabled(Context context) {

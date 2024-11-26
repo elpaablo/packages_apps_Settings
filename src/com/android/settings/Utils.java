@@ -1482,4 +1482,13 @@ public final class Utils extends com.android.settingslib.Utils {
         pm.setComponentEnabledSetting(componentName,
                 PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
     }
+
+    public static boolean revamped(Context context) {
+        boolean revamp = true;
+        if (context != null && context.getContentResolver() != null) {
+            revamp = android.provider.Settings.System.getIntForUser(context.getContentResolver(),
+                    android.provider.Settings.System.SETTINGS_HOMEPAGE_REVAMP, 1, UserHandle.USER_CURRENT) == 1;
+        }
+        return com.android.settings.flags.Flags.homepageRevamp() && revamp;
+    }
 }

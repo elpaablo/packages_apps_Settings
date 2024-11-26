@@ -71,6 +71,7 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
     private boolean mScrollNeeded = true;
     private boolean mFirstStarted = true;
     private ActivityEmbeddingController mActivityEmbeddingController;
+    private static boolean mRevamped = true;
 
     public TopLevelSettings() {
         final Bundle args = new Bundle();
@@ -88,7 +89,7 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
 
     @Override
     protected int getPreferenceScreenResId() {
-        return Flags.homepageRevamp() ? R.xml.top_level_settings_v2 : R.xml.top_level_settings;
+        return mRevamped ? R.xml.top_level_settings_v2 : R.xml.top_level_settings;
     }
 
     @Override
@@ -104,6 +105,7 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        mRevamped = revamped(context);
         HighlightableMenu.fromXml(context, getPreferenceScreenResId());
         use(SupportPreferenceController.class).setActivity(getActivity());
     }
@@ -212,7 +214,7 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         super.onCreatePreferences(savedInstanceState, rootKey);
-        if (Flags.homepageRevamp()) {
+        if (mRevamped) {
             return;
         }
         int tintColor = Utils.getHomepageIconColor(getContext());
@@ -342,7 +344,7 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
             return mHighlightMixin.onCreateAdapter(this, preferenceScreen, mScrollNeeded);
         }
 
-        if (Flags.homepageRevamp()) {
+        if (mRevamped) {
             return new RoundCornerPreferenceAdapter(preferenceScreen);
         }
         return super.onCreateAdapter(preferenceScreen);
@@ -357,6 +359,10 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
         if (mHighlightMixin != null) {
             mHighlightMixin.reloadHighlightMenuKey(getArguments());
         }
+    }
+
+    private boolean revamped(Context context) {
+        return com.android.settings.Utils.revamped(context);
     }
 
     private void iteratePreferences(PreferenceJob job) {
@@ -392,8 +398,7 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
 
     public static final BaseSearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =
             new BaseSearchIndexProvider(
-                    Flags.homepageRevamp()
-                            ? R.xml.top_level_settings_v2
+                    mRevamped ? R.xml.top_level_settings_v2
                             : R.xml.top_level_settings) {
 
                 @Override

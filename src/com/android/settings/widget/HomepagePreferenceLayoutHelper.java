@@ -22,7 +22,6 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceViewHolder;
 
 import com.android.settings.R;
-import com.android.settings.flags.Flags;
 
 /** Helper for homepage preference to manage layout. */
 public class HomepagePreferenceLayoutHelper {
@@ -41,7 +40,7 @@ public class HomepagePreferenceLayoutHelper {
 
     public HomepagePreferenceLayoutHelper(Preference preference) {
         preference.setLayoutResource(
-                Flags.homepageRevamp()
+                com.android.settings.Utils.revamped(preference.getContext())
                         ? R.layout.homepage_preference_v2
                         : R.layout.homepage_preference);
     }

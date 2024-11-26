@@ -16,6 +16,7 @@
 
 package com.android.settings.core;
 
+import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
@@ -46,6 +47,9 @@ public class RoundCornerPreferenceAdapter extends PreferenceGroupAdapter {
 
     private final Handler mHandler;
 
+    private Boolean mCachedRevamp = null;
+    private final Context mContext;
+
     private final Runnable mSyncRunnable = new Runnable() {
         @Override
         public void run() {
@@ -57,7 +61,21 @@ public class RoundCornerPreferenceAdapter extends PreferenceGroupAdapter {
         super(preferenceGroup);
         mPreferenceGroup = preferenceGroup;
         mHandler = new Handler(Looper.getMainLooper());
+        mContext = mPreferenceGroup.getContext().getApplicationContext();
+        mCachedRevamp = revamped();
         updatePreferences();
+    }
+
+    private boolean revamped() {
+        boolean enabled;
+        if (mCachedRevamp != null) {
+            enabled = mCachedRevamp.booleanValue();
+        }
+        else {
+            enabled = com.android.settings.Utils.revamped(mContext);
+            mCachedRevamp = Boolean.valueOf(enabled);
+        }
+        return enabled;
     }
 
     @Override
@@ -70,7 +88,7 @@ public class RoundCornerPreferenceAdapter extends PreferenceGroupAdapter {
     @Override
     public void onBindViewHolder(@NonNull PreferenceViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
-        if (Flags.homepageRevamp()) {
+        if (revamped()) {
             updateBackground(holder, position);
         }
     }
@@ -105,7 +123,7 @@ public class RoundCornerPreferenceAdapter extends PreferenceGroupAdapter {
 
     @SuppressWarnings("WeakerAccess") /* synthetic access */
     private void updatePreferences() {
-        if (Flags.homepageRevamp()) {
+        if (revamped()) {
             mRoundCornerMappingList = new ArrayList<>();
             mappingPreferenceGroup(mRoundCornerMappingList, mPreferenceGroup);
         }

@@ -21,6 +21,20 @@
     android:key="top_level_settings">
 
     <PreferenceCategory
+        android:order="-140"
+        android:key="top_level_alpha_category"
+        android:layout="@layout/settingslib_preference_category_no_title">
+        <com.android.settings.widget.HomepagePreference
+            android:fragment="com.alpha.settings.AlphaSettings"
+            android:icon="@drawable/ic_settings_alpha"
+            android:key="top_level_alpha_settings"
+            android:order="-20"
+            android:title="@string/alpha_settings_title"
+            android:summary="@string/alpha_settings_summary"
+            settings:controller="com.alpha.settings.TopLevelAlphaEntryPreferenceController" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:order="-130"
         android:key="top_level_connectivity_category"
         android:layout="@layout/settingslib_preference_category_no_title">

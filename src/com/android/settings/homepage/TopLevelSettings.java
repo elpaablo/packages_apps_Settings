@@ -25,6 +25,8 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -52,6 +54,7 @@ import com.android.settings.overlay.FeatureFactory;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settings.support.SupportPreferenceController;
 import com.android.settings.widget.HomepagePreference;
+import com.android.settings.widget.HomepagePreferenceLayoutHelper;
 import com.android.settings.widget.HomepagePreferenceLayoutHelper.HomepagePreferenceLayout;
 import com.android.settingslib.core.instrumentation.Instrumentable;
 import com.android.settingslib.drawer.Tile;
@@ -64,14 +67,16 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
     private static final String TAG = "TopLevelSettings";
     private static final String SAVED_HIGHLIGHT_MIXIN = "highlight_mixin";
     private static final String PREF_KEY_SUPPORT = "top_level_support";
-
     private boolean mIsEmbeddingActivityEnabled;
     private TopLevelHighlightMixin mHighlightMixin;
     private int mPaddingHorizontal;
     private boolean mScrollNeeded = true;
     private boolean mFirstStarted = true;
     private ActivityEmbeddingController mActivityEmbeddingController;
-    private static boolean mRevamped = true;
+
+    private Boolean mRevamped = null;
+    private static int sResId = -1;
+    private int mDashBoardStyle = -1;
 
     public TopLevelSettings() {
         final Bundle args = new Bundle();
@@ -89,7 +94,40 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
 
     @Override
     protected int getPreferenceScreenResId() {
-        return mRevamped ? R.xml.top_level_settings_v2 : R.xml.top_level_settings;
+        int dashboardStyle = getDashboardStyle();
+        switch (dashboardStyle) {
+            case 0: /* AOSP */
+                sResId = R.xml.top_level_settings;
+                break;
+            case 2: /* DoT */
+                sResId =R.xml.top_level_settings_dot;
+                break;
+            case 3: /* NAD */
+                sResId = R.xml.top_level_settings_nad;
+                break;
+            default:
+                sResId = R.xml.top_level_settings_v2;
+                break;
+        }
+        return sResId;
+    }
+
+    private boolean revamped() {
+        if (mRevamped == null) {
+            mRevamped = Boolean.valueOf(Utils.revamped(getContext()));
+        }
+        return mRevamped.booleanValue();
+    }
+
+    private int getDashboardStyle() {
+        return getDashboardStyle(getContext());
+    }
+
+    private int getDashboardStyle(Context context) {
+        if (mDashBoardStyle == -1) {
+            mDashBoardStyle = Utils.getDashboardStyle(context);
+        }
+        return mDashBoardStyle;
     }
 
     @Override
@@ -105,7 +143,7 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mRevamped = revamped(context);
+        mDashBoardStyle = getDashboardStyle(context);
         HighlightableMenu.fromXml(context, getPreferenceScreenResId());
         use(SupportPreferenceController.class).setActivity(getActivity());
     }
@@ -214,16 +252,15 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         super.onCreatePreferences(savedInstanceState, rootKey);
-        if (mRevamped) {
-            return;
+        if (getDashboardStyle() == 0) { // AOSP legacy
+            int tintColor = Utils.getHomepageIconColor(getContext());
+            iteratePreferences(preference -> {
+                Drawable icon = preference.getIcon();
+                if (icon != null) {
+                    icon.setTint(tintColor);
+                }
+            });
         }
-        int tintColor = Utils.getHomepageIconColor(getContext());
-        iteratePreferences(preference -> {
-            Drawable icon = preference.getIcon();
-            if (icon != null) {
-                icon.setTint(tintColor);
-            }
-        });
     }
 
     @Override
@@ -237,6 +274,9 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
         iteratePreferences(preference -> {
             if (preference instanceof HomepagePreferenceLayout) {
                 ((HomepagePreferenceLayout) preference).getHelper().setIconVisible(isRegularLayout);
+                if(getDashboardStyle() == 2) { //DoT
+                    ((HomepagePreferenceLayout) preference).getHelper().setChevronVisible(isRegularLayout);
+                }
             }
         });
     }
@@ -274,6 +314,7 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
 
             @Override
             public void init() {
+                int dashboardStyle = getDashboardStyle();
                 mIconPaddingStart = getResources().getDimensionPixelSize(isTwoPane
                         ? R.dimen.homepage_preference_icon_padding_start_two_pane
                         : R.dimen.homepage_preference_icon_padding_start);
@@ -285,10 +326,12 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
             @Override
             public void doForEach(Preference preference) {
                 if (preference instanceof HomepagePreferenceLayout) {
-                    ((HomepagePreferenceLayout) preference).getHelper()
-                            .setIconPaddingStart(mIconPaddingStart);
-                    ((HomepagePreferenceLayout) preference).getHelper()
-                            .setTextPaddingStart(mTextPaddingStart);
+                    HomepagePreferenceLayoutHelper helper =
+                            ((HomepagePreferenceLayout) preference).getHelper();
+                    if (helper != null) {
+                        helper.setIconPaddingStart(mIconPaddingStart);
+                        helper.setTextPaddingStart(mTextPaddingStart);
+                    }
                 }
             }
         });
@@ -344,7 +387,7 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
             return mHighlightMixin.onCreateAdapter(this, preferenceScreen, mScrollNeeded);
         }
 
-        if (mRevamped) {
+        if (revamped()) {
             return new RoundCornerPreferenceAdapter(preferenceScreen);
         }
         return super.onCreateAdapter(preferenceScreen);
@@ -359,10 +402,6 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
         if (mHighlightMixin != null) {
             mHighlightMixin.reloadHighlightMenuKey(getArguments());
         }
-    }
-
-    private boolean revamped(Context context) {
-        return com.android.settings.Utils.revamped(context);
     }
 
     private void iteratePreferences(PreferenceJob job) {
@@ -397,9 +436,7 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
     }
 
     public static final BaseSearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =
-            new BaseSearchIndexProvider(
-                    mRevamped ? R.xml.top_level_settings_v2
-                            : R.xml.top_level_settings) {
+            new BaseSearchIndexProvider(sResId != -1 ? sResId : R.xml.top_level_settings_v2) {
 
                 @Override
                 protected boolean isPageSearchEnabled(Context context) {

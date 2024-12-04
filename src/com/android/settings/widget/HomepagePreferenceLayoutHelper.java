@@ -16,21 +16,29 @@
 
 package com.android.settings.widget;
 
+import android.content.Context;
 import android.view.View;
 
 import androidx.preference.Preference;
 import androidx.preference.PreferenceViewHolder;
 
 import com.android.settings.R;
+import com.android.settings.Utils;
 
 /** Helper for homepage preference to manage layout. */
 public class HomepagePreferenceLayoutHelper {
 
     private View mIcon;
     private View mText;
+    private View mChevron;
     private boolean mIconVisible = true;
+    private boolean mChevronVisible = false;
     private int mIconPaddingStart = -1;
     private int mTextPaddingStart = -1;
+
+    private static Boolean sRevamped = null;
+    private int mDashboardStyle = -1;
+    private static Context sContext;
 
     /** The interface for managing preference layouts on homepage */
     public interface HomepagePreferenceLayout {
@@ -39,10 +47,53 @@ public class HomepagePreferenceLayoutHelper {
     }
 
     public HomepagePreferenceLayoutHelper(Preference preference) {
-        preference.setLayoutResource(
-                com.android.settings.Utils.revamped(preference.getContext())
-                        ? R.layout.homepage_preference_v2
-                        : R.layout.homepage_preference);
+        Context context = preference.getContext();
+        sRevamped = revamped(context);
+        mDashboardStyle = getDashboardStyle(context);
+        sContext = context.getApplicationContext();
+        if (mDashboardStyle == 2) {
+            mChevronVisible = true;
+        }
+        setLayoutResource(preference);
+    }
+
+    private void setLayoutResource(Preference preference) {
+        int dashBoardStyle = getDashboardStyle();
+        switch(dashBoardStyle) {
+            case 0: // AOSP legacy
+                preference.setLayoutResource(R.layout.homepage_preference);
+                break;
+            case 2: // DoT
+                preference.setLayoutResource(R.layout.dot_homepage_preference);
+                break;
+            case 3: // NAD
+                preference.setLayoutResource(R.layout.nad_homepage_preference);
+                break;
+            default: // AOSP revamped
+                preference.setLayoutResource(R.layout.homepage_preference_v2);
+        }
+    }
+
+    private static boolean revamped() {
+        return revamped(sContext);
+    }
+
+    private static boolean revamped(Context context) {
+        if (sRevamped == null) {
+            sRevamped = Boolean.valueOf(Utils.revamped(context));
+        }
+        return sRevamped.booleanValue();
+    }
+
+    private int getDashboardStyle() {
+        return getDashboardStyle(sContext);
+    }
+
+    private int getDashboardStyle(Context context) {
+        if (mDashboardStyle == -1) {
+            mDashboardStyle = Utils.getDashboardStyle(context);
+        }
+        return mDashboardStyle;
     }
 
     /** Sets whether the icon should be visible */
@@ -53,12 +104,26 @@ public class HomepagePreferenceLayoutHelper {
         }
     }
 
-    /** Sets the icon padding start */
+    /** Sets whether the chevron icon should be visible */
+    public void setChevronVisible(boolean visible) {
+        mChevronVisible = visible;
+        if (mChevron != null) {
+            mChevron.setVisibility(visible ? View.VISIBLE : View.GONE);
+        }
+    }
+
+    /** Sets the icon paddings */
     public void setIconPaddingStart(int paddingStart) {
         mIconPaddingStart = paddingStart;
-        if (mIcon != null && paddingStart >= 0) {
-            mIcon.setPaddingRelative(paddingStart, mIcon.getPaddingTop(), mIcon.getPaddingEnd(),
-                    mIcon.getPaddingBottom());
+        if (paddingStart >= 0) {
+            if (mIcon != null) {
+                mIcon.setPaddingRelative(paddingStart, mIcon.getPaddingTop(), paddingStart,
+                        mIcon.getPaddingBottom());
+            }
+            if (getDashboardStyle() == 2 && mChevron != null) {
+                mChevron.setPaddingRelative(paddingStart, mChevron.getPaddingTop(), paddingStart,
+                        mChevron.getPaddingBottom());
+            }
         }
     }
 
@@ -74,7 +139,9 @@ public class HomepagePreferenceLayoutHelper {
     void onBindViewHolder(PreferenceViewHolder holder) {
         mIcon = holder.findViewById(R.id.icon_frame);
         mText = holder.findViewById(R.id.text_frame);
+        mChevron = holder.findViewById(R.id.chevron_frame);
         setIconVisible(mIconVisible);
+        setChevronVisible(mChevronVisible);
         setIconPaddingStart(mIconPaddingStart);
         setTextPaddingStart(mTextPaddingStart);
     }

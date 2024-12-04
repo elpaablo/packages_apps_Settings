@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:androidprv="http://schemas.android.com/apk/prv/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginStart="?android:attr/listPreferredItemPaddingEnd"
+    android:layout_marginEnd="?android:attr/listPreferredItemPaddingEnd"
+    android:layout_marginBottom="4dp"
+    android:background="@android:color/transparent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/alpha_settings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/nad_round_background_top"
+        android:gravity="start|center"
+        android:padding="2dp"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="58dp"
+            android:minHeight="48dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="6dp"
+            android:padding="4dp"
+            android:background="@drawable/nad_top_menu_avatar_background">
+
+            <androidx.preference.internal.PreferenceImageView
+                android:id="@+id/avatar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="centerInside"
+                android:paddingVertical="4dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_settings_alpha" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="start|center"
+            android:orientation="vertical"
+            android:paddingStart="18dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:ellipsize="marquee"
+                android:singleLine="true"
+                android:text="@string/alpha_settings_title"
+                android:textAppearance="?android:attr/textAppearanceListItem"
+                android:textColor="?androidprv:attr/materialColorOnSurface"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="1dp"
+                android:layout_weight="1"
+                android:ellipsize="marquee"
+                android:singleLine="true"
+                android:text="@string/alpha_settings_summary"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="?androidprv:attr/materialColorOnSurfaceVariant" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@android:color/transparent"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <LinearLayout
+            android:id="@+id/wifi"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:background="@drawable/nad_round_background_bottom_left"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="2dp">
+
+                <androidx.preference.internal.PreferenceImageView
+                    android:id="@+id/wifi_icon"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_settings_wireless_filled"
+                    android:scaleType="centerInside"
+                    android:paddingVertical="2dp"
+                    android:paddingHorizontal="4dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginEnd="4dp" />
+
+                <TextView
+                    android:id="@+id/wifi_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ellipsize="marquee"
+                    android:singleLine="true"
+                    android:text="@string/network_dashboard_title"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="?androidprv:attr/materialColorOnSurface"
+                    android:layout_centerVertical="true"
+                    android:padding="2dp"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_toRightOf="@id/wifi_icon"
+                    style="@style/PreferenceSummaryTextStyle" />
+              </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/battery"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:layout_marginStart="2dp"
+            android:background="@drawable/nad_round_background_bottom_right"
+            android:gravity="center">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="2dp">
+
+                <androidx.preference.internal.PreferenceImageView
+                    android:id="@+id/battery_icon"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_settings_battery_filled"
+                    android:rotation="90"
+                    android:scaleType="centerInside"
+                    android:paddingVertical="2dp"
+                    android:paddingHorizontal="4dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginEnd="4dp" />
+
+                <TextView
+                    android:id="@+id/battery_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ellipsize="marquee"
+                    android:singleLine="true"
+                    android:text="@string/network_dashboard_title"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="?androidprv:attr/materialColorOnSurface"
+                    android:layout_centerVertical="true"
+                    android:padding="2dp"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_toRightOf="@id/battery_icon"
+                    style="@style/PreferenceSummaryTextStyle" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

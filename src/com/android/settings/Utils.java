@@ -1491,4 +1491,13 @@ public final class Utils extends com.android.settingslib.Utils {
         }
         return com.android.settings.flags.Flags.homepageRevamp() && revamp;
     }
+
+    public static int getDashboardStyle(Context context) {
+        int style = 1; // AOSP revamped, default
+        if (context != null && context.getContentResolver() != null) {
+            style = android.provider.Settings.System.getIntForUser(context.getContentResolver(),
+                    android.provider.Settings.System.SETTINGS_DASHBOARD_STYLE, style, UserHandle.USER_CURRENT);
+        }
+        return style;
+    }
 }

@@ -29,7 +29,7 @@ import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceGroupAdapter;
 import androidx.preference.PreferenceViewHolder;
 
-import com.android.settings.flags.Flags;
+import com.android.settings.Utils;
 import com.android.settingslib.widget.theme.R;
 
 import java.util.ArrayList;
@@ -47,8 +47,9 @@ public class RoundCornerPreferenceAdapter extends PreferenceGroupAdapter {
 
     private final Handler mHandler;
 
-    private Boolean mCachedRevamp = null;
-    private final Context mContext;
+    private static Boolean sRevamped = null;
+    private static Context sContext;
+    private int mDashBoardStyle = -1;
 
     private final Runnable mSyncRunnable = new Runnable() {
         @Override
@@ -59,23 +60,36 @@ public class RoundCornerPreferenceAdapter extends PreferenceGroupAdapter {
 
     public RoundCornerPreferenceAdapter(@NonNull PreferenceGroup preferenceGroup) {
         super(preferenceGroup);
+
+        Context context = preferenceGroup.getContext();
+        sRevamped = revamped(context);
+        mDashBoardStyle = getDashboardStyle(context);
+        sContext = context.getApplicationContext();
         mPreferenceGroup = preferenceGroup;
         mHandler = new Handler(Looper.getMainLooper());
-        mContext = mPreferenceGroup.getContext().getApplicationContext();
-        mCachedRevamp = revamped();
         updatePreferences();
     }
 
-    private boolean revamped() {
-        boolean enabled;
-        if (mCachedRevamp != null) {
-            enabled = mCachedRevamp.booleanValue();
+    private static boolean revamped() {
+        return revamped(sContext);
+    }
+
+    private static boolean revamped(Context context) {
+        if (sRevamped == null) {
+            sRevamped = Boolean.valueOf(Utils.revamped(context));
         }
-        else {
-            enabled = com.android.settings.Utils.revamped(mContext);
-            mCachedRevamp = Boolean.valueOf(enabled);
+        return sRevamped.booleanValue();
+    }
+
+    private int getDashboardStyle() {
+        return getDashboardStyle(sContext);
+    }
+
+    private int getDashboardStyle(Context context) {
+        if (mDashBoardStyle == -1) {
+            mDashBoardStyle = Utils.getDashboardStyle(context);
         }
-        return enabled;
+        return mDashBoardStyle;
     }
 
     @Override
@@ -96,29 +110,73 @@ public class RoundCornerPreferenceAdapter extends PreferenceGroupAdapter {
     protected @DrawableRes int getRoundCornerDrawableRes(int position, boolean isSelected) {
         int CornerType = mRoundCornerMappingList.get(position);
 
-        if ((CornerType & ROUND_CORNER_CENTER) == 0) {
-            return 0;
+        @DrawableRes int drawableRes = 0;
+        int dashboardStye = getDashboardStyle();
+
+        if (dashboardStye == 0) return drawableRes;
+
+        if (dashboardStye == 3) { // NAD uses singles
+            // the only one preference
+            drawableRes = isSelected
+                ? com.android.settings.R.drawable.nad_selected_background
+                : com.android.settings.R.drawable.nad_round_background;
+            return drawableRes;
         }
 
-        if (((CornerType & ROUND_CORNER_TOP) != 0) && ((CornerType & ROUND_CORNER_BOTTOM) == 0)) {
-            // the first
-            return isSelected ? R.drawable.settingslib_round_background_top_selected
-                    : R.drawable.settingslib_round_background_top;
-        } else if (((CornerType & ROUND_CORNER_BOTTOM) != 0)
+        if ((CornerType & ROUND_CORNER_CENTER) != 0) {
+            if (((CornerType & ROUND_CORNER_TOP) != 0) && ((CornerType & ROUND_CORNER_BOTTOM) == 0)) {
+                // the first
+                if (isSelected) {
+                     drawableRes = dashboardStye == 2
+                        ? com.android.settings.R.drawable.dot_selected_background_top // DoT
+                        : R.drawable.settingslib_round_background_top_selected; // AOSP revamped
+                }
+                else {
+                    drawableRes = dashboardStye == 2
+                        ? com.android.settings.R.drawable.dot_round_background_top // DoT
+                        : R.drawable.settingslib_round_background_top; // AOSP revamped
+                }
+            } else if (((CornerType & ROUND_CORNER_BOTTOM) != 0)
                 && ((CornerType & ROUND_CORNER_TOP) == 0)) {
-            // the last
-            return isSelected ? R.drawable.settingslib_round_background_bottom_selected
-                    : R.drawable.settingslib_round_background_bottom;
-        } else if (((CornerType & ROUND_CORNER_TOP) != 0)
-                && ((CornerType & ROUND_CORNER_BOTTOM) != 0)) {
-            // the only one preference
-            return isSelected ? R.drawable.settingslib_round_background_selected
-                    : R.drawable.settingslib_round_background;
-        } else {
-            // in the center
-            return isSelected ? R.drawable.settingslib_round_background_center_selected
-                    : R.drawable.settingslib_round_background_center;
+                // the last
+                if (isSelected) {
+                     drawableRes = dashboardStye == 2
+                        ? com.android.settings.R.drawable.dot_selected_background_bottom // DoT
+                        : R.drawable.settingslib_round_background_bottom_selected; // AOSP revamped
+                }
+                else {
+                    drawableRes = dashboardStye == 2
+                        ? com.android.settings.R.drawable.dot_round_background_bottom // DoT
+                        : R.drawable.settingslib_round_background_bottom; // AOSP revamped
+                }
+            } else if (((CornerType & ROUND_CORNER_TOP) != 0)
+                    && ((CornerType & ROUND_CORNER_BOTTOM) != 0)) {
+                // the only one preference
+                if (isSelected) {
+                     drawableRes = dashboardStye == 2
+                        ? com.android.settings.R.drawable.dot_selected_background // DoT
+                        : R.drawable.settingslib_round_background_selected; // AOSP revamped
+                }
+                else {
+                    drawableRes = dashboardStye == 2
+                        ? com.android.settings.R.drawable.dot_round_background // DoT
+                        : R.drawable.settingslib_round_background; // AOSP revamped
+                }
+            } else {
+                // in the center
+                if (isSelected) {
+                     drawableRes = dashboardStye == 2
+                        ? com.android.settings.R.drawable.dot_selected_background_center // DoT
+                        : R.drawable.settingslib_round_background_center_selected; // AOSP revamped
+                }
+                else {
+                    drawableRes = dashboardStye == 2
+                        ? com.android.settings.R.drawable.dot_round_background_center // DoT
+                        : R.drawable.settingslib_round_background_center; // AOSP revamped
+                }
+            }
         }
+        return drawableRes;
     }
 
     @SuppressWarnings("WeakerAccess") /* synthetic access */
@@ -180,7 +238,9 @@ public class RoundCornerPreferenceAdapter extends PreferenceGroupAdapter {
     private void updateBackground(PreferenceViewHolder holder, int position) {
         @DrawableRes int backgroundRes = getRoundCornerDrawableRes(position, false /* isSelected*/);
 
-        View v = holder.itemView;
-        v.setBackgroundResource(backgroundRes);
+        if (backgroundRes > 0) {
+            View v = holder.itemView;
+            v.setBackgroundResource(backgroundRes);
+        }
     }
 }

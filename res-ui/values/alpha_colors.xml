@@ -29,10 +29,10 @@
     <color name="alpha_color_background_accent2">@android:color/system_accent3_600</color>
     <color name="alpha_color_ripple">#1f000000</color>
 
-    <color name="dot_round_background_color">@android:color/system_surface_bright_light</color>
-    <color name="dot_selected_background_color">@android:color/system_surface_container_high_light</color>
-    <color name="nad_round_background_color">@android:color/system_surface_bright_light</color>
-    <color name="nad_selected_background_color">@android:color/system_surface_container_high_light</color>
-    <color name="nad_preference_accent_color_primary">@android:color/system_accent1_400</color>
-    <color name="nad_preference_accent_color_secondary">@android:color/system_accent1_200</color>
+    <color name="dot_color_background">@android:color/system_surface_bright_light</color>
+    <color name="dot_color_selected">@android:color/system_surface_container_high_light</color>
+    <color name="nad_color_background">@android:color/system_surface_bright_light</color>
+    <color name="nad_color_selected">@android:color/system_surface_container_high_light</color>
+    <color name="nad_color_primary_accent">@android:color/system_accent1_400</color>
+    <color name="nad_color_secondary_accent">@android:color/system_accent1_200</color>
 </resources>

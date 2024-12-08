@@ -22,7 +22,7 @@
         android:top="2dp">
         <shape android:shape="rectangle">
             <solid
-                android:color="@color/nad_preference_bg_color" />
+                android:color="@color/nad_color_background" />
             <corners
                 android:radius="@dimen/nad_round_background_radius" />
         </shape>

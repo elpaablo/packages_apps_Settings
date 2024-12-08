@@ -1,6 +1,7 @@
 package com.android.settings.homepage;
 
 import android.animation.ObjectAnimator;
+import android.app.settings.SettingsEnums;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -16,11 +17,15 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.preference.Preference;
 import androidx.preference.PreferenceViewHolder;
 
 import com.android.settings.R;
+import com.android.settings.SettingsApplication;
+import com.android.settings.homepage.SettingsHomepageActivity;
+import com.android.settings.overlay.FeatureFactory;
 
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
@@ -60,9 +65,6 @@ public class NadTopMenu extends Preference {
 
         TextView mBatteryText = holder.itemView.findViewById(context.getResources().
                 getIdentifier("id/battery_title", null, context.getPackageName()));
-
-        //TextView deviceName = holder.itemView.findViewById(context.getResources().
-        //        getIdentifier("id/device_name", null, context.getPackageName()));
 
         context.registerReceiver(new BroadcastReceiver() {
             @Override
@@ -117,6 +119,16 @@ public class NadTopMenu extends Preference {
                 context.startActivity(intent);
             }
         });
+
+        final SettingsHomepageActivity homeActivity =
+                ((SettingsApplication) context.getApplicationContext()).getHomeActivity();
+        View toolbar =  holder.itemView.findViewById(context.getResources().
+                getIdentifier("id/search_action_bar", null, context.getPackageName()));
+        if (homeActivity != null) {
+            FeatureFactory.getFeatureFactory().getSearchFeatureProvider()
+                    .initSearchToolbar(homeActivity /* activity */, toolbar,
+                            SettingsEnums.SETTINGS_HOMEPAGE);
+        }
 
         LinearLayout mWifi = holder.itemView.findViewById(context.getResources().
                 getIdentifier("id/wifi", null, context.getPackageName()));

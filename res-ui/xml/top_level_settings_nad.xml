@@ -22,7 +22,7 @@
 
     <com.android.settings.homepage.NadTopMenu
         android:order="-160"/>
-  
+
     <com.android.settings.widget.HomepagePreference
         android:fragment="com.android.settings.connecteddevice.ConnectedDeviceDashboardFragment"
         android:icon="@drawable/ic_devices_other_filled"

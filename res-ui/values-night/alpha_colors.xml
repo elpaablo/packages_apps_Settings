@@ -30,8 +30,12 @@
 
     <color name="dot_color_background">@android:color/system_surface_bright_dark</color>
     <color name="dot_color_selected">@android:color/system_surface_container_high_dark</color>
+
     <color name="nad_color_background">@android:color/system_surface_bright_dark</color>
+    <color name="nad_color_background_tint">#4d030303</color>
     <color name="nad_color_selected">@android:color/system_surface_container_high_dark</color>
+    <color name="nad_color_gradient_start">@android:color/system_neutral2_700</color>
+    <color name="nad_color_gradient_end">@android:color/system_neutral2_600</color>
     <color name="nad_color_primary_accent">@android:color/system_accent1_400</color>
     <color name="nad_color_secondary_accent">@android:color/system_accent1_200</color>
 </resources>

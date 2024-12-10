@@ -27,6 +27,8 @@ import com.android.settings.SettingsApplication;
 import com.android.settings.homepage.SettingsHomepageActivity;
 import com.android.settings.overlay.FeatureFactory;
 
+import com.android.settingslib.widget.LayoutPreference;
+
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;

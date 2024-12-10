@@ -248,10 +248,14 @@ public class SettingsHomepageActivity extends FragmentActivity implements
         }
 
         setupEdgeToEdge();
-        setContentView(
+        if (getDashboardStyle() == 3) {
+            setContentView(R.layout.settings_nad_homepage_container_v2);
+        }
+        else {
+            setContentView(
                 revamped() ? R.layout.settings_homepage_container_v2
                         : R.layout.settings_homepage_container);
-
+        }
         mIsTwoPane = ActivityEmbeddingUtils.isAlreadyEmbedded(this);
 
         updateAppBarMinHeight();
@@ -402,6 +406,7 @@ public class SettingsHomepageActivity extends FragmentActivity implements
     }
 
     private void initSearchBarView() {
+        if (getDashboardStyle() == 3) return;
         if (revamped()) {
             View toolbar = findViewById(R.id.search_action_bar);
             FeatureFactory.getFeatureFactory().getSearchFeatureProvider()
@@ -466,7 +471,8 @@ public class SettingsHomepageActivity extends FragmentActivity implements
         window.setStatusBarColor(color);
         // Update content background.
         findViewById(android.R.id.content).setBackgroundColor(color);
-        if (revamped()) {
+        int style = getDashboardStyle();
+        if ((style == 1 || style == 2) && revamped()) {
             //Update search bar background
             findViewById(R.id.app_bar_container).setBackgroundColor(color);
         }
@@ -763,8 +769,12 @@ public class SettingsHomepageActivity extends FragmentActivity implements
         view.requestFocus();
     }
 
+    private int getDashboardStyle() {
+        return com.android.settings.Utils.getDashboardStyle(getApplicationContext());
+    }
+
     private boolean revamped() {
-      return com.android.settings.Utils.revamped(getApplicationContext());
+        return com.android.settings.Utils.revamped(getApplicationContext());
     }
 
     private void updateHomepageAppBar() {

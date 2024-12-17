@@ -14,6 +14,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +26,7 @@ import androidx.preference.PreferenceViewHolder;
 import com.android.settings.R;
 import com.android.settings.SettingsApplication;
 import com.android.settings.homepage.SettingsHomepageActivity;
+import com.android.settings.accounts.AvatarViewMixin;
 import com.android.settings.overlay.FeatureFactory;
 
 import com.android.settingslib.widget.LayoutPreference;
@@ -64,6 +66,64 @@ public class NadTopMenu extends Preference {
 
         final boolean selectable = false;
         final Context context = getContext();
+
+        holder.itemView.setFocusable(selectable);
+        holder.itemView.setClickable(selectable);
+        holder.setDividerAllowedAbove(false);
+        holder.setDividerAllowedBelow(false);
+
+        // get homepage activity
+        SettingsHomepageActivity homeActivity = ((SettingsApplication) context.getApplicationContext()).getHomeActivity();
+
+       // avatar
+       ImageView imageView = (ImageView) holder.itemView.findViewById(
+                context.getResources().getIdentifier("id/account_avatar", null, context.getPackageName()));
+        if (homeActivity != null) {
+            if (AvatarViewMixin.isAvatarSupported(homeActivity)) {
+                imageView.setVisibility(View.VISIBLE);
+                homeActivity.getLifecycle().addObserver(new AvatarViewMixin(homeActivity, imageView));
+            } else {
+                imageView.setVisibility(View.GONE);
+            }
+        }
+
+        // Alpha Settings
+        LinearLayout mAlpha = holder.itemView.findViewById(context.getResources().
+                getIdentifier("id/alpha_settings", null, context.getPackageName()));
+        mAlpha.setClickable(true);
+        mAlpha.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setComponent(new ComponentName("com.android.settings", "com.android.settings.Settings$AlphaSettingsActivity"));
+                context.startActivity(intent);
+            }
+        });
+
+        // search
+        View toolbar =  holder.itemView.findViewById(context.getResources().
+                getIdentifier("id/search_action_bar", null, context.getPackageName()));
+        if (homeActivity != null) {
+            FeatureFactory.getFeatureFactory().getSearchFeatureProvider()
+                    .initSearchToolbar(homeActivity /* activity */, toolbar,
+                            SettingsEnums.SETTINGS_HOMEPAGE);
+        }
+
+        // wifi
+        LinearLayout mWifi = holder.itemView.findViewById(context.getResources().
+                getIdentifier("id/wifi", null, context.getPackageName()));
+        mWifi.setClickable(true);
+        mWifi.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setComponent(new ComponentName("com.android.settings", "com.android.settings.Settings$NetworkDashboardActivity"));
+                context.startActivity(intent);
+            }
+        });
+
+        // battery
+
+        LinearLayout mBattery = holder.itemView.findViewById(context.getResources().
+                getIdentifier("id/battery", null, context.getPackageName()));
 
         TextView mBatteryText = holder.itemView.findViewById(context.getResources().
                 getIdentifier("id/battery_title", null, context.getPackageName()));
@@ -106,45 +166,6 @@ public class NadTopMenu extends Preference {
 
         }, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 
-        holder.itemView.setFocusable(selectable);
-        holder.itemView.setClickable(selectable);
-        holder.setDividerAllowedAbove(false);
-        holder.setDividerAllowedBelow(false);
-
-        LinearLayout mAlpha = holder.itemView.findViewById(context.getResources().
-                getIdentifier("id/alpha_settings", null, context.getPackageName()));
-        mAlpha.setClickable(true);
-        mAlpha.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setComponent(new ComponentName("com.android.settings", "com.android.settings.Settings$AlphaSettingsActivity"));
-                context.startActivity(intent);
-            }
-        });
-
-        final SettingsHomepageActivity homeActivity =
-                ((SettingsApplication) context.getApplicationContext()).getHomeActivity();
-        View toolbar =  holder.itemView.findViewById(context.getResources().
-                getIdentifier("id/search_action_bar", null, context.getPackageName()));
-        if (homeActivity != null) {
-            FeatureFactory.getFeatureFactory().getSearchFeatureProvider()
-                    .initSearchToolbar(homeActivity /* activity */, toolbar,
-                            SettingsEnums.SETTINGS_HOMEPAGE);
-        }
-
-        LinearLayout mWifi = holder.itemView.findViewById(context.getResources().
-                getIdentifier("id/wifi", null, context.getPackageName()));
-        mWifi.setClickable(true);
-        mWifi.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setComponent(new ComponentName("com.android.settings", "com.android.settings.Settings$NetworkDashboardActivity"));
-                context.startActivity(intent);
-            }
-        });
-
-        LinearLayout mBattery = holder.itemView.findViewById(context.getResources().
-                getIdentifier("id/battery", null, context.getPackageName()));
         mBattery.setClickable(true);
         mBattery.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

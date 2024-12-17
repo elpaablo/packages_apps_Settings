@@ -16,15 +16,20 @@
   -->
 
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:left="?android:attr/listPreferredItemPaddingStart"
-        android:right="?android:attr/listPreferredItemPaddingEnd"
-        android:top="2dp">
-        <shape android:shape="rectangle">
-            <solid
-                android:color="@color/nad_color_selected" />
-            <corners
-                android:radius="@dimen/nad_merge_background_radius" />
+     <item>
+         <shape android:tintMode="multiply">
+             <gradient
+                 android:angle="270.0"
+                 android:endColor="@android:color/system_accent1_500"
+                 android:startColor="@android:color/system_accent1_500" />
+        </shape>
+    </item>
+    <item>
+        <shape android:tintMode="multiply">
+            <gradient
+                android:angle="-270.0"
+                android:endColor="#33000006"
+                android:startColor="#aa000000" />
         </shape>
     </item>
 </layer-list>

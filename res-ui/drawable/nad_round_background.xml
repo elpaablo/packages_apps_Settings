@@ -20,25 +20,14 @@
         android:left="?android:attr/listPreferredItemPaddingStart"
         android:right="?android:attr/listPreferredItemPaddingEnd"
         android:top="2dp">
-        <layer-list>
-            <item>
-                <shape android:tintMode="src_atop">
-                    <gradient
-                        android:angle="270.0"
-                        android:endColor="@color/nad_color_gradient_end"
-                        android:startColor="@color/nad_color_gradient_start" />
-                    <corners android:radius="@dimen/nad_round_background_radius" />
-                </shape>
-            </item>
-            <item>
-                <shape android:tintMode="src_atop">
-                    <gradient
-                        android:angle="-270.0"
-                        android:endColor="#33000006"
-                        android:startColor="#aa000000" />
-                    <corners android:radius="@dimen/nad_round_background_radius" />
-                </shape>
-            </item>
-        </layer-list>
+        <shape android:shape="rectangle"
+            android:tint="@color/alpha_color_background_dark_a30"
+            android:tintMode="src_atop">
+            <gradient
+                android:angle="270.0"
+                android:endColor="@color/alpha_color_gradient_end"
+                android:startColor="@color/alpha_color_gradient_start" />
+            <corners android:radius="@dimen/nad_round_background_radius"/>
+        </shape>
     </item>
 </layer-list>

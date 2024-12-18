@@ -16,15 +16,14 @@
   -->
 
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:left="?android:attr/listPreferredItemPaddingStart"
-        android:right="?android:attr/listPreferredItemPaddingEnd"
-        android:top="2dp">
-        <shape android:shape="rectangle">
-            <solid
-                android:color="@color/alpha_color_selected" />
-            <corners
-                android:radius="@dimen/dot_merge_background_radius" />
+    <item>
+        <shape android:shape="rectangle"
+            android:tint="@color/alpha_color_primary_accent_dark_a30"
+            android:tintMode="src_atop">
+            <gradient
+                android:angle="270.0"
+                android:endColor="@color/alpha_color_primary_accent"
+                android:startColor="@color/alpha_color_primary_accent_dark" />
         </shape>
     </item>
 </layer-list>

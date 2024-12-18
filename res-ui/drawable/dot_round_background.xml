@@ -22,7 +22,7 @@
         android:top="2dp">
         <shape android:shape="rectangle">
             <solid
-                android:color="@color/dot_color_background" />
+                android:color="@color/alpha_color_background" />
             <corners
                 android:radius="@dimen/dot_round_background_radius" />
         </shape>

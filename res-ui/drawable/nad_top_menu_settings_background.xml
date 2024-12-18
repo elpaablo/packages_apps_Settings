@@ -18,9 +18,9 @@
     android:color="@color/alpha_color_ripple">
     <item android:id="@android:id/mask">
         <shape>
-            <solid android:color="#FFFFFFFF" />
-            <corners android:radius="@dimen/nad_round_background_radius" />
+            <solid android:color="@color/alpha_color_selected" />
+            <corners android:radius="@dimen/nad_merge_background_radius" />
         </shape>
     </item>
-    <item android:id="@android:id/background" android:drawable="@drawable/nad_neutral_background" />
+    <item android:id="@android:id/background" android:drawable="@drawable/nad_squared_background"/>
 </ripple>

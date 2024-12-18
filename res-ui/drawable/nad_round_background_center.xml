@@ -22,9 +22,9 @@
         android:top="2dp">
         <shape android:shape="rectangle">
             <solid
-                android:color="@color/alpha_color_selected" />
+                android:color="@color/alpha_color_background" />
             <corners
-                android:radius="@dimen/dot_merge_background_radius" />
+                android:radius="@dimen/nad_merge_background_radius" />
         </shape>
     </item>
 </layer-list>

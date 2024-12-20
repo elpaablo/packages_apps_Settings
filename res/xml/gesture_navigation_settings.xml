@@ -68,6 +68,12 @@
             settings:controller="com.android.settings.gestures.GestureNavigationSettingsAssistController"
         />
 
+        <SwitchPreferenceCompat
+            android:key="search_all_entrypoints_enabled"
+            android:title="@string/search_all_entrypoints_enabled_title"
+            android:summary="@string/search_all_entrypoints_enabled_summary"
+            settings:controller="com.android.settings.gestures.GestureNavigationCtsController" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -96,4 +102,3 @@
         android:selectable="false"
         settings:searchable="false"/>
 </PreferenceScreen>
-

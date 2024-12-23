@@ -71,6 +71,16 @@
         settings:enableCopying="true"
         settings:controller="com.android.settings.deviceinfo.firmware_version.MaintainerPreferenceController"/>
 
+
+    <!-- AlphaDroid version -->
+    <Preference
+        android:key="alpha_version"
+        android:title="@string/alpha_build_version"
+        android:summary="@string/summary_placeholder"
+        android:icon="@drawable/ic_settings_alpha"
+        settings:enableCopying="true"
+        settings:controller="com.android.settings.deviceinfo.firmwareversion.AlphaVersionPreferenceController"/>
+
     <!-- Build date -->
     <Preference
         android:key="os_build_date"

@@ -5477,14 +5477,14 @@
             <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
                 android:value="com.alpha.settings.fragments.misc.SmartPixels" />
         </activity>
-        <receiver android:name="com.crdroid.settings.fragments.ui.doze.DozeReceiver"
+        <receiver android:name="com.alpha.settings.fragments.lockscreen.doze.DozeReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
-        <service android:name="com.crdroid.settings.fragments.ui.doze.DozeService"
+        <service android:name="com.alpha.settings.fragments.lockscreen.doze.DozeService"
                 android:exported="true"
                 android:permission="crDroidDozeService">
         </service>

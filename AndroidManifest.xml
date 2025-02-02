@@ -5509,7 +5509,7 @@
         </receiver>
         <service android:name="com.alpha.settings.fragments.lockscreen.doze.DozeService"
                 android:exported="true"
-                android:permission="crDroidDozeService">
+                android:permission="CustomDozeService">
         </service>
 
         <!-- App lock -->

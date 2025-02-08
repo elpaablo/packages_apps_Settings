@@ -5450,7 +5450,8 @@
                 android:icon="@drawable/ic_settings_alpha"
                 android:exported="true"
                 android:taskAffinity="com.android.settings"
-                android:parentActivityName="Settings">
+                android:parentActivityName="Settings"
+                android:theme="@style/Theme.AlphaSettings">
             <intent-filter android:priority="1">
                 <action android:name="com.alpha.settings.AlphaSettings" />
                 <category android:name="android.intent.category.DEFAULT" />

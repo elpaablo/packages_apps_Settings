@@ -88,6 +88,10 @@
 
     <style name="Theme.SubSettings" parent="Theme.SubSettings.Base"/>
 
+    <style name="Theme.AlphaSettings" parent="@android:style/Theme.DeviceDefault.Settings">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
     <style name="Theme.ProvisioningActivity" parent="@android:style/Theme.Translucent.NoTitleBar">
         <item name="android:windowAnimationStyle">@null</item>
         <item name="android:windowIsTranslucent">true</item>

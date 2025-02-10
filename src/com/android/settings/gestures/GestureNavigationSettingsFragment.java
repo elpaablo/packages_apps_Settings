@@ -17,12 +17,18 @@
 package com.android.settings.gestures;
 
 import android.app.settings.SettingsEnums;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.view.WindowManager;
+
+import androidx.preference.Preference;
+import androidx.preference.PreferenceScreen;
+import androidx.preference.SwitchPreferenceCompat;
 
 import com.android.settings.R;
 import com.android.settings.dashboard.DashboardFragment;
@@ -39,7 +45,8 @@ import lineageos.providers.LineageSettings;
  * A fragment to include all the settings related to Gesture Navigation mode.
  */
 @SearchIndexable(forTarget = SearchIndexable.ALL & ~SearchIndexable.ARC)
-public class GestureNavigationSettingsFragment extends DashboardFragment {
+public class GestureNavigationSettingsFragment extends DashboardFragment implements
+        Preference.OnPreferenceChangeListener {
 
     public static final String TAG = "GestureNavigationSettingsFragment";
 
@@ -63,6 +70,9 @@ public class GestureNavigationSettingsFragment extends DashboardFragment {
     private int mCurrentRightWidth;
     private int mCurrentLefttWidth;
 
+    private SwitchPreferenceCompat mImePreference;
+    private SwitchPreferenceCompat mHintPreference;
+
     public GestureNavigationSettingsFragment() {
         super();
     }
@@ -80,6 +90,10 @@ public class GestureNavigationSettingsFragment extends DashboardFragment {
         super.onCreatePreferences(savedInstanceState, rootKey);
 
         final Resources res = getActivity().getResources();
+        final Context context = getContext();
+        final ContentResolver resolver = context.getContentResolver();
+        final PreferenceScreen screen = getPreferenceScreen();
+
         mDefaultBackGestureInset = res.getDimensionPixelSize(
                 com.android.internal.R.dimen.config_backGestureInset);
         mBackGestureInsetScales = getFloatArray(res.obtainTypedArray(
@@ -89,13 +103,22 @@ public class GestureNavigationSettingsFragment extends DashboardFragment {
         initSeekBarPreference(RIGHT_EDGE_SEEKBAR_KEY);
         initSeekBarPreference(GESTURE_BACK_HEIGHT_KEY);
 
-        boolean isTaskbarEnabled = LineageSettings.System.getInt(getContext().getContentResolver(),
-                LineageSettings.System.ENABLE_TASKBAR, isLargeScreen(getContext()) ? 1 : 0) == 1;
+        mHintPreference = screen.findPreference(NAVIGATION_BAR_HINT_KEY);
+        mImePreference = screen.findPreference(NAVIGATION_BAR_IME_SPACE);
+
+        boolean isTaskbarEnabled = LineageSettings.System.getInt(resolver,
+                LineageSettings.System.ENABLE_TASKBAR, isLargeScreen(context) ? 1 : 0) == 1;
         if (isTaskbarEnabled) {
-            getPreferenceScreen().removePreference(
-                    getPreferenceScreen().findPreference(NAVIGATION_BAR_HINT_KEY));
-            getPreferenceScreen().removePreference(
-                    getPreferenceScreen().findPreference(NAVIGATION_BAR_IME_SPACE));
+            if (mHintPreference != null) {
+                screen.removePreference(mHintPreference);
+            }
+            if (mImePreference != null) {
+                screen.removePreference(mImePreference);
+            }
+        } else {
+            boolean isNavBarHintDisabled = LineageSettings.System.getIntForUser(resolver,
+                    LineageSettings.System.NAVIGATION_BAR_HINT, 0, UserHandle.USER_CURRENT) == 0;
+            mImePreference.setEnabled(isNavBarHintDisabled);
         }
     }
 
@@ -224,6 +247,18 @@ public class GestureNavigationSettingsFragment extends DashboardFragment {
             }
             return true;
         });
+    }
+
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        if (NAVIGATION_BAR_HINT_KEY.equals(preference.getKey())) {
+            boolean isHintEnabled = Boolean.parseBoolean(String.valueOf(newValue));
+            if (mImePreference != null) {
+                mImePreference.setEnabled(!isHintEnabled);
+            }
+            return true;
+        }
+        return false;
     }
 
     private static float[] getFloatArray(TypedArray array) {

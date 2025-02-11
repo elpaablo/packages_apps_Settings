@@ -30,6 +30,7 @@
         <item name="preferenceTheme">@style/SettingsPreferenceTheme</item>
         <item name="android:listPreferredItemHeight">72dip</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:datePickerDialogTheme">@style/PickerDialogTheme.Settings</item>
 
         <item name="fingerprint_layout_theme">@style/FingerprintLayoutTheme</item>
@@ -37,6 +38,7 @@
         <item name="ic_menu_moreoverflow">@*android:drawable/ic_menu_moreoverflow_holo_dark</item>
 
         <!-- For edge-to-edge -->
+        <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
 
         <!-- For wifi icon -->
@@ -83,13 +85,14 @@
     <style name="Theme.SubSettings.Base" parent="Theme.Settings.NoActionBar">
         <!-- Redefine the ActionBar style for contentInsetStart -->
         <item name="android:actionBarStyle">@style/Widget.ActionBar.SubSettings</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
     <style name="Theme.SubSettings" parent="Theme.SubSettings.Base"/>
 
-    <style name="Theme.AlphaSettings" parent="@android:style/Theme.DeviceDefault.Settings">
-        <item name="android:windowNoTitle">true</item>
+    <style name="Theme.AlphaSettings" parent="Theme.Settings.Home">
+         <item name="android:windowNoTitle">true</item>
     </style>
 
     <style name="Theme.ProvisioningActivity" parent="@android:style/Theme.Translucent.NoTitleBar">
@@ -137,7 +140,6 @@
         <item name="buttonBarButtonStyle">@*android:style/Widget.DeviceDefault.Button.ButtonBar.AlertDialog</item>
     </style>
 
-
     <style name="Theme.AlertDialog.SimConfirmDialog">
         <item name="buttonBarStyle">@style/SimConfirmDialog.ButtonBarStyle</item>
         <item name="buttonBarButtonStyle">@style/SimConfirmDialog.OutlineButton</item>
@@ -166,6 +168,7 @@
         <item name="android:windowTranslucentNavigation">false</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">#00000000</item>
+        <item name="android:navigationBarColor">#00000000</item>
     </style>
 
     <style name="FallbackHome.SetupWizard" parent="@android:style/Theme.Material.NoActionBar.Fullscreen">
@@ -174,15 +177,16 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">#00000000</item>
+        <item name="android:navigationBarColor">#00000000</item>
     </style>
 
     <style name="Theme.BluetoothPermission" parent="@style/Theme.AlertDialog">
         <item name="android:windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.Settings.HomeBase" parent="@android:style/Theme.DeviceDefault.Settings">
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowNoTitle">true</item>
+    <style name="Theme.Settings.HomeBase" parent="Theme.Settings.NoActionBar">
+        <item name="colorPrimary">@*android:color/primary_device_default_settings_light</item>
+        <item name="colorAccent">@*android:color/accent_device_default_light</item>
         <item name="android:listPreferredItemPaddingStart">16dp</item>
         <item name="preferenceTheme">@style/SettingsPreferenceTheme</item>
 
@@ -199,10 +203,9 @@
     <style name="Theme.Settings.Home" parent="Theme.Settings.HomeBase">
         <item name="colorPrimaryDark">@*android:color/primary_dark_device_default_settings_light</item>
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:navigationBarDividerColor">@null</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:colorBackground">@android:color/system_surface_container_light</item>
+        <item name="android:navigationBarDividerColor">@*android:color/ripple_material_light</item>
+        <!-- Homepage should follow device default design, the values is same as device default theme.-->
+        <item name="android:statusBarColor">?attr/colorPrimaryDark</item>
     </style>
 
     <style name="Theme.Settings.Home.NoAnimation">

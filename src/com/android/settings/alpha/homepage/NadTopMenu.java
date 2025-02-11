@@ -130,8 +130,8 @@ public class NadTopMenu extends Preference {
         LinearLayout batteryLayout = holder.itemView.findViewById(context.getResources().
                 getIdentifier("id/battery", null, context.getPackageName()));
 
-        TextView batteryTextView = holder.itemView.findViewById(context.getResources().
-                getIdentifier("id/battery_title", null, context.getPackageName()));
+        TextView batterySummaryTextView = holder.itemView.findViewById(context.getResources().
+                getIdentifier("id/battery_summary", null, context.getPackageName()));
 
         mReceiver = new BroadcastReceiver() {
             @Override
@@ -153,35 +153,29 @@ public class NadTopMenu extends Preference {
                 // scale it
                 float scaledLevel = rawLevel / (float) scale;
 
-                // convert to perentage
+                // convert to percentage
                 batteryLevel = (int) ((scaledLevel) * 100);
-
-                batteryTextView.setMaxLines(2);
-                batteryTextView.setGravity(Gravity.CENTER_VERTICAL);
 
                 ImageView batteryImageView = (ImageView) holder.itemView.findViewById(
                         context.getResources().getIdentifier("id/battery_icon", null, context.getPackageName()));
 
-                // Show the battery charged percentage text
-                String batterySummary = context.getString(R.string.power_usage_summary_title) + "\n";
+                // get battery info and set summary
+                String summary = "";
                 if (isCharging) {
                     batteryImageView.setImageResource(R.drawable.ic_top_menu_battery_charging);
                     batteryImageView.setRotation(0.0f);
                     if (usbCharge) {
-                        batteryTextView.setText(batterySummary + "USB " + batteryLevel + "%");
+                        summary = "USB \u00B7 ";
                     } else if (acCharge) {
-                        batteryTextView.setText(batterySummary + "AC " + batteryLevel + "%");
-                    } else {
-                        batteryTextView.setText(batterySummary + batteryLevel + "%");
+                        summary = "AC \u00B7 ";
                     }
                 } else {
                     batteryImageView.setImageResource(R.drawable.ic_top_menu_battery);
                     batteryImageView.setRotation(90.0f);
-                    batteryTextView.setText(batterySummary + batteryLevel + "%");
-
                 }
+                summary += batteryLevel + "%";
+                batterySummaryTextView.setText(summary);
             }
-
         };
         context.registerReceiver(mReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 

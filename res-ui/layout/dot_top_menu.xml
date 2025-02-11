@@ -55,11 +55,8 @@
                 android:id="@+id/about_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:textAlignment="viewStart"
-                android:singleLine="true"
-                android:textAppearance="?android:attr/textAppearanceListItem"
-                android:text="@string/about_settings"/>
+                android:text="@string/about_settings"
+                style="@style/AlphaPreferenceTitle"/>
 
             <TextView
                 android:id="@+id/device_name"
@@ -67,13 +64,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/about_title"
                 android:layout_alignStart="@id/about_title"
-                android:layout_gravity="start"
-                android:textAlignment="viewStart"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="?androidprv:attr/materialColorOnSurfaceVariant"
                 android:text="@string/summary_placeholder"
-                android:singleLine="true"
-                style="@style/PreferenceSummaryTextStyle"/>
+                style="@style/AlphaPreferenceSummary"/>
         </RelativeLayout>
 
         <include layout="@layout/layout_chevron"/>
@@ -123,24 +115,16 @@
                 android:id="@+id/settings_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:textAlignment="viewStart"
-                android:singleLine="true"
-                android:textAppearance="?android:attr/textAppearanceListItem"
-                android:text="@string/alpha_settings_title"/>
+                android:text="@string/alpha_settings_title"
+                style="@style/AlphaPreferenceTitle"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/settings_title"
                 android:layout_alignStart="@id/settings_title"
-                android:layout_gravity="start"
-                android:textAlignment="viewStart"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="?androidprv:attr/materialColorOnSurfaceVariant"
                 android:text="@string/alpha_settings_summary"
-                android:singleLine="true"
-                style="@style/PreferenceSummaryTextStyle"/>
+                style="@style/AlphaPreferenceSummary"/>
         </RelativeLayout>
 
         <include layout="@layout/layout_chevron"/>

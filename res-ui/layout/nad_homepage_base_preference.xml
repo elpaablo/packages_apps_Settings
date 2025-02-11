@@ -18,17 +18,9 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:androidprv="http://schemas.android.com/apk/prv/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/nad_single_pref_bg"
-    android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-    android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-    android:layout_marginVertical="6dp"
-    android:gravity="center_vertical"
-    android:orientation="horizontal"
-    android:clipToPadding="false"
-    android:baselineAligned="false">
+    android:orientation="horizontal">
 
     <LinearLayout
         android:id="@+id/icon_frame"
@@ -74,6 +66,8 @@
             style="@style/AlphaPreferenceSummary"/>
     </RelativeLayout>
 
-    <include layout="@layout/layout_chevron" />
+    <include layout="@layout/layout_chevron"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

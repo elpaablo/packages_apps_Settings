@@ -51,6 +51,8 @@ public class HomepagePreferenceLayoutHelper {
     public HomepagePreferenceLayoutHelper(Preference preference) {
         int dashBoardStyle = Utils.getDashboardStyle(preference.getContext());
 
+        if (preference == null) return;
+
         // DOT style is handled dynamically by TopLevelSettings
         switch (dashBoardStyle) {
             case DASHBOARD_STYLE_AOSP_LEGACY:

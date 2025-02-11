@@ -34,6 +34,6 @@
     <dimen name="dot_preference_height">82dp</dimen>
     <dimen name="nad_round_background_radius">28dp</dimen>
     <dimen name="nad_merge_background_radius">3dp</dimen>
-    <dimen name="nad_preference_height">72dp</dimen>
+    <dimen name="nad_preference_height">76dp</dimen>
     <dimen name="nad_stroke_width">1dp</dimen>
 </resources>

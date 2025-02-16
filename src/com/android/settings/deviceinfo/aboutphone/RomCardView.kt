@@ -1,6 +1,7 @@
 package com.android.settings.deviceinfo.aboutphone
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Build
 import android.os.SystemProperties
@@ -11,6 +12,8 @@ import android.widget.ImageView.ScaleType
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+
+import com.android.settings.deviceinfo.firmwareversion.FirmwareVersionActivity
 import com.android.settings.Utils
 
 import com.android.settings.R;
@@ -87,5 +90,10 @@ class RomCardView(context: Context, attrs: AttributeSet?) : AboutBaseCard(contex
         linearLayout.setBackgroundColor(resources.getColor(R.color.contextual_card_background, null))
         layout.addView(rom_logo, rlparams)
         layout.addView(linearLayout, lparamas)
+        layout.setOnClickListener {
+            val intent = Intent("android.settings.FIRMWARE_VERSION_SETTINGS")
+            intent.setClass(context, FirmwareVersionActivity::class.java)
+            context.startActivity(intent)
+        }
     }
 }

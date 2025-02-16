@@ -5442,6 +5442,17 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="com.android.settings.deviceinfo.firmwareversion.FirmwareVersionActivity"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.settings.FIRMWARE_VERSION_SETTINGS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
+                       android:value="com.android.settings.deviceinfo.firmwareversion.FirmwareVersionSettings" />
+        </activity>
+
         <!-- This is the longest AndroidManifest.xml ever. -->
 
         <!-- Begin Alpha Settings -->

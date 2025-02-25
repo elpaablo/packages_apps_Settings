@@ -55,15 +55,21 @@ android_library {
     srcs: [
         "src/**/*.java",
         "src/**/*.kt",
+        "ScoopSettings/src/**/*.java",
+        "ScoopSettings/src/**/*.kt",
     ],
     exclude_srcs: [
         "src/com/android/settings/biometrics/fingerprint2/lib/**/*.kt",
     ],
     use_resource_processor: true,
+
+    aaptflags: ["--extra-packages com.scoop.settings"],
+
     resource_dirs: [
         "res",
         "res-export", // for external usage
         "res-product",
+        "ScoopSettings/res",
     ],
     static_libs: [
         // External dependencies

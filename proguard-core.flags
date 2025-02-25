@@ -1,0 +1,2 @@
+# ScoopdroidSettings
+-keep class com.scoop.settings.**

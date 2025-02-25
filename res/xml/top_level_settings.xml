@@ -21,6 +21,15 @@
     android:key="top_level_settings">
 
     <com.android.settings.widget.HomepagePreference
+        android:key="top_level_scoop_settings"
+        android:icon="@drawable/ic_android"
+        android:title="@string/scoop_settings_title"
+        android:summary="@string/scoop_settings_summary"
+        android:order="-204"
+        android:fragment="com.scoop.settings.ScoopSettings"
+        settings:controller="com.scoop.settings.TopLevelSettingsPreferenceController" />
+
+    <com.android.settings.widget.HomepagePreference
         android:fragment="com.android.settings.network.NetworkDashboardFragment"
         android:icon="@drawable/ic_settings_wireless"
         android:key="top_level_network"

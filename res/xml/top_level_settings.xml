@@ -22,7 +22,7 @@
 
     <com.android.settings.widget.HomepagePreference
         android:key="top_level_scoop_settings"
-        android:icon="@drawable/ic_android"
+        android:icon="@drawable/ic_scoop"
         android:title="@string/scoop_settings_title"
         android:summary="@string/scoop_settings_summary"
         android:order="-204"

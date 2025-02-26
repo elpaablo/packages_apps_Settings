@@ -46,6 +46,20 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:order="-125"
+        android:key="top_level_scoop_settings"
+        android:layout="@layout/settingslib_preference_category_no_title">
+        <com.android.settings.widget.HomepagePreference
+            android:key="top_level_scoop_settings"
+            android:icon="@drawable/ic_scoop"
+            android:title="@string/scoop_settings_title"
+            android:summary="@string/scoop_settings_summary"
+            android:order="-204"
+            android:fragment="com.scoop.settings.ScoopSettings"
+            settings:controller="com.scoop.settings.TopLevelSettingsPreferenceController" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:order="-120"
         android:key="top_level_personalize_category"
         android:layout="@layout/settingslib_preference_category_no_title">
